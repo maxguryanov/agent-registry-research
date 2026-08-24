@@ -12,7 +12,7 @@ that into a system that keeps measuring and keeps the history.
 Nothing runs continuously. GitHub Actions starts each script on a schedule, it
 finishes in minutes, and it exits. There is no server to keep alive.
 
-**Status: modules 1 to 4 (schema, indexer, prober, metrics) are in place. Publishing is still to come.**
+**Status: modules 1 to 5 (schema, indexer, prober, metrics, publishing) are in place. Scheduling is still to come.**
 
 ---
 
@@ -365,3 +365,48 @@ The survival arithmetic was verified against synthetic history with a known
 answer: 50 agents alive at the anchor, 30 alive at day 30, 20 at day 90,
 with decoy checks at days 27 and 33 to confirm the horizon picks the closest
 reading, and 50 never-live agents to confirm they stay out of the denominator.
+
+
+---
+
+## Publishing
+
+```bash
+python3 -m monitor.publish            # writes docs/
+python3 -m monitor.publish --out site
+```
+
+Produces `docs/index.html` and `docs/api/*.json`. GitHub Pages serves the
+directory; the JSON files are the API.
+
+### Static on purpose
+
+The page contains no JavaScript and loads nothing from anywhere: charts are
+inline SVG generated in Python, styling is inline CSS, and there are no fonts,
+images or scripts to fetch. Verified in a browser: zero scripts, zero external
+requests.
+
+That buys three things. It cannot go down or be rate-limited, which matters if
+a link is shared widely. It renders identically offline, from a cache, or in
+ten years. And there is no server to administer.
+
+The cost is that figures are as fresh as the last run. Since the prober runs
+once a day, a live application would have shown the same numbers with more
+that could break.
+
+### What the page says when it does not know
+
+Before the first probe run, the funnel section says so instead of showing
+zeroes. Before 30 days of history, the survival section says how many days
+remain. A page that prints 0% when it means "not measured yet" is worse than
+one that says nothing.
+
+### Checked
+
+Rendered against the figures published in the 2026 report and compared: 6.8%
+per agent with a 95% interval of 5.5–8.4, matching the report exactly, 10.2%
+per owner, 16.5% URI churn. Charts, dark theme and a 375px viewport were
+checked in a browser.
+
+`docs/` is not committed from a developer machine. The scheduled job builds it
+from real data, so a partial local index cannot end up on the public page.
