@@ -12,7 +12,9 @@ that into a system that keeps measuring and keeps the history.
 Nothing runs continuously. GitHub Actions starts each script on a schedule, it
 finishes in minutes, and it exits. There is no server to keep alive.
 
-**Status: modules 1 to 5 (schema, indexer, prober, metrics, publishing) are in place. Scheduling is still to come.**
+**Setting it up takes seven steps in a browser: [SETUP.md](SETUP.md).**
+
+**Status: complete. See [SETUP.md](SETUP.md) to run it.**
 
 ---
 
@@ -410,3 +412,28 @@ checked in a browser.
 
 `docs/` is not committed from a developer machine. The scheduled job builds it
 from real data, so a partial local index cannot end up on the public page.
+
+
+---
+
+## Schedules
+
+| Workflow | When | What |
+|---|---|---|
+| `index.yml` | hourly at :17 | new events from Base |
+| `daily.yml` | 03:40 UTC | catch up, probe the panel, rebuild and commit the page |
+| `operations.yml` | manual | setup, backfill, status, one-off runs |
+
+`operations.yml` exists so that every administrative task is a dropdown in the
+Actions tab rather than a command on a laptop: create the tables, load the
+history, check the state, force a run, take a full census.
+
+Two details worth knowing:
+
+**The hourly job is on :17, not :00.** Scheduled jobs across GitHub bunch up on
+the hour and queue behind each other.
+
+**The nightly job commits the generated `docs/`.** That keeps a dated history
+of every figure ever published — the git log of `docs/api/` is an audit trail
+of how the numbers moved — and the commit counts as repository activity, which
+is what stops GitHub disabling scheduled workflows after sixty idle days.

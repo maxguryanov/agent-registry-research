@@ -1,0 +1,49 @@
+# Pull new registry events from Base, once an hour.
+#
+# The run is short: about 1,800 new blocks and a handful of RPC calls. It
+# resumes from the cursor in the database, so a skipped or failed hour costs
+# nothing except a later catch-up.
+
+name: Index registry
+
+on:
+  schedule:
+    # Not on the hour. Scheduled jobs across GitHub bunch up there and get
+    # queued behind everyone else's.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: indexer
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: monitor/requirements.txt
+
+      - run: pip install -r monitor/requirements.txt
+
+      - name: Index new events
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BASE_RPC_URLS: ${{ secrets.BASE_RPC_URLS }}
+          PYTHONUNBUFFERED: "1"
+        # Well inside the job timeout, so the step reports its own summary
+        # instead of being killed halfway through a chunk.
+        run: python -m monitor.indexer --max-seconds 1200
+
+      - name: Report state
+        if: always()
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BASE_RPC_URLS: ${{ secrets.BASE_RPC_URLS }}
+        run: python -m monitor.indexer --status

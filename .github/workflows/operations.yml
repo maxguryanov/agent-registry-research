@@ -1,0 +1,132 @@
+# Everything you would otherwise need a terminal for, as a dropdown.
+#
+# Actions tab -> Operations -> Run workflow -> pick a task.
+#
+# The scheduled workflows do the routine work. This one is for setting the
+# system up, loading the history the first time, and looking at the state when
+# something seems wrong.
+
+name: Operations
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "What to do"
+        required: true
+        default: status
+        type: choice
+        options:
+          - status                # report everything, change nothing
+          - create-tables         # first-time setup
+          - backfill-history      # load the registry from the deploy block
+          - build-panel           # select the agents probed daily
+          - probe-now             # run the daily measurement immediately
+          - publish-now           # rebuild the page from what is stored
+          - full-sweep            # probe EVERY agent, not just the panel
+      minutes:
+        description: "Time budget for backfill-history (minutes)"
+        required: false
+        default: "300"
+      panel_target:
+        description: "Panel size for build-panel"
+        required: false
+        default: "2000"
+      resume_run:
+        description: "Run id to continue (full-sweep only; leave blank to start one)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: operations
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      BASE_RPC_URLS: ${{ secrets.BASE_RPC_URLS }}
+      PROBER_CONTACT: ${{ secrets.PROBER_CONTACT }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: monitor/requirements.txt
+
+      - run: pip install -r monitor/requirements.txt
+
+      - name: Run the selected task
+        run: |
+          set -euo pipefail
+          case "${{ inputs.task }}" in
+            status)
+              python -m monitor.init_db --status
+              echo
+              python -m monitor.indexer --status
+              echo
+              python -m monitor.panel --status
+              ;;
+            create-tables)
+              python -m monitor.init_db
+              ;;
+            backfill-history)
+              # Safe to stop and re-run: the cursor lives in the database and
+              # re-indexing a range cannot create duplicates. If the hourly
+              # job overlaps this one, it sees the advisory lock and exits.
+              python -m monitor.indexer \
+                --max-seconds $(( ${{ inputs.minutes }} * 60 ))
+              echo
+              python -m monitor.indexer --status
+              ;;
+            build-panel)
+              python -m monitor.panel --target ${{ inputs.panel_target }}
+              ;;
+            probe-now)
+              python -m monitor.panel --target ${{ inputs.panel_target }}
+              python -m monitor.prober --concurrency 8 --timeout 20
+              ;;
+            publish-now)
+              : # the publish step below does the work
+              ;;
+            full-sweep)
+              echo "Probing every agent in the registry, not just the panel."
+              echo "That is one request per agent to third-party servers, and"
+              echo "at 64,000 agents it may not finish inside one job. If it"
+              echo "stops early, run this task again with resume_run set to the"
+              echo "run id printed below; already-checked agents are skipped."
+              if [ -n "${{ inputs.resume_run }}" ]; then
+                python -m monitor.prober --concurrency 8 --timeout 20 --all \
+                  --resume ${{ inputs.resume_run }}
+              else
+                python -m monitor.prober --concurrency 8 --timeout 20 --all \
+                  --notes "manual full sweep"
+              fi
+              ;;
+          esac
+
+      - name: Publish if the task produced new figures
+        if: ${{ inputs.task == 'probe-now' || inputs.task == 'publish-now' || inputs.task == 'full-sweep' }}
+        run: |
+          python -m monitor.publish
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --staged --quiet; then
+            echo "figures unchanged, nothing to commit"
+          else
+            git commit -m "Publish figures ($( date -u +%Y-%m-%d ), ${{ inputs.task }})"
+            git push
+          fi
+
+      - name: Summary
+        if: always()
+        run: python -m monitor.metrics >> "$GITHUB_STEP_SUMMARY" || true

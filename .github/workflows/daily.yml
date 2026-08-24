@@ -1,0 +1,79 @@
+# The daily measurement: probe the panel, recompute the aggregates, rebuild
+# the public page, commit it.
+#
+# Committing the generated files rather than deploying them as an artifact is
+# deliberate. It keeps a dated history of every figure ever published, which
+# is an audit trail rather than noise, and the commit counts as repository
+# activity, which is what stops GitHub disabling scheduled workflows after
+# sixty idle days.
+
+name: Probe and publish
+
+on:
+  schedule:
+    - cron: "40 3 * * *"      # 03:40 UTC, off-peak for most of the world
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: monitor/requirements.txt
+
+      - run: pip install -r monitor/requirements.txt
+
+      - name: Catch up on events first
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BASE_RPC_URLS: ${{ secrets.BASE_RPC_URLS }}
+          PYTHONUNBUFFERED: "1"
+        run: python -m monitor.indexer --max-seconds 900
+
+      - name: Add newly registered agents to the panel
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -m monitor.panel --target ${{ vars.PANEL_TARGET || 2000 }}
+
+      - name: Probe the panel
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PROBER_CONTACT: ${{ secrets.PROBER_CONTACT }}
+          PYTHONUNBUFFERED: "1"
+        run: python -m monitor.prober --concurrency 8 --timeout 20
+
+      - name: Build the page and the API
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -m monitor.publish
+
+      - name: Commit the published figures
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --staged --quiet; then
+            echo "figures unchanged, nothing to commit"
+          else
+            git commit -m "Publish figures for $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Summary
+        if: always()
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -m monitor.metrics >> "$GITHUB_STEP_SUMMARY"
