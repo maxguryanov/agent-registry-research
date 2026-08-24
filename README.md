@@ -26,7 +26,7 @@ Even sample of **1,204 agents** across that history, tested for liveness:
 
 Two further figures: **10.2%** of unique owner addresses have at least one working agent, and of **371** declared service endpoints, **122** respond (32.9%).
 
-Full report: forthcoming.
+Full report: [The State of Agent Registries 2026](https://github.com/maxguryanov/agent-registry-research/releases/tag/v1.0)
 
 ---
 
