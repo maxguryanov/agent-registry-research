@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS blocks (
 
 CREATE TABLE IF NOT EXISTS registration_events (
     id              BIGSERIAL PRIMARY KEY,
-    event_type      TEXT          NOT NULL,   -- Registered | URIUpdated | Transfer | unknown
+    event_type      TEXT          NOT NULL,   -- Registered | URIUpdated | Transfer
+                                              -- | MetadataSet | unknown
     agent_id        NUMERIC(78,0),            -- uint256; NULL if the log had no agent id
     block_number    BIGINT        NOT NULL,
     block_time      TIMESTAMPTZ,
@@ -58,6 +59,8 @@ CREATE TABLE IF NOT EXISTS registration_events (
     owner           TEXT,                     -- Registered: owner. Transfer: recipient.
     from_address    TEXT,                     -- Transfer only: previous holder
     agent_uri       TEXT,                     -- Registered / URIUpdated: decoded string
+    metadata_key    TEXT,                     -- MetadataSet only, e.g. 'agentWallet'
+    metadata_value  TEXT,                     -- MetadataSet only, hex or utf-8
 
     raw_topics      TEXT,                     -- JSON array of topic hex strings
     raw_data        TEXT,                     -- untouched ABI-encoded data payload
@@ -72,6 +75,13 @@ CREATE INDEX IF NOT EXISTS registration_events_block_idx
     ON registration_events (block_number);
 CREATE INDEX IF NOT EXISTS registration_events_type_idx
     ON registration_events (event_type);
+CREATE INDEX IF NOT EXISTS registration_events_metadata_key_idx
+    ON registration_events (metadata_key) WHERE metadata_key IS NOT NULL;
+
+-- Added after v1. Written this way so the file stays safe to re-run against a
+-- database created before these columns existed.
+ALTER TABLE registration_events ADD COLUMN IF NOT EXISTS metadata_key   TEXT;
+ALTER TABLE registration_events ADD COLUMN IF NOT EXISTS metadata_value TEXT;
 
 
 -- ---------------------------------------------------------------------------
@@ -274,5 +284,6 @@ ORDER BY agent_id, checked_at DESC, id DESC;
 
 
 INSERT INTO schema_version (version, note)
-VALUES (1, 'initial monitoring schema')
+VALUES (1, 'initial monitoring schema'),
+       (2, 'MetadataSet key/value columns')
 ON CONFLICT (version) DO NOTHING;
