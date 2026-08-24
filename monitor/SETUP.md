@@ -17,8 +17,23 @@ On the project page find **Connection string** and copy it. It looks like:
 postgresql://neondb_owner:PASSWORD@ep-something-123456.eu-central-1.aws.neon.tech/neondb?sslmode=require
 ```
 
-Pick the region nearest you. The free tier is enough: this stores tens of
-megabytes a year against a 0.5 GB allowance.
+Two choices on that page are worth getting right.
+
+**Region: keep the default US East.** The database is contacted by GitHub's
+runners, not by your laptop, and those sit on the US east coast. A probe run
+makes a couple of thousand round trips, so a database near the runners is
+faster than one near you. You will rarely query it directly.
+
+**Copy the direct connection string, not the pooled one.** If the host in the
+string contains `-pooler`, switch *Connection pooling* off and copy again. A
+transaction pooler does not hold session-level advisory locks, and the indexer
+uses one to stop two runs overlapping. Nothing gets corrupted either way — the
+inserts are idempotent — but the work would be done twice. The code warns if it
+spots a pooled string.
+
+The free tier is enough: this stores tens of megabytes a year against a 0.5 GB
+allowance. Postgres 18 is fine; the schema was developed against 16 and uses
+nothing version-specific.
 
 ## 2. Give the repository the connection string
 

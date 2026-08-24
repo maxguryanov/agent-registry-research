@@ -51,7 +51,31 @@ def database_url() -> str:
     # Neon and most managed providers require TLS. Add it if the caller forgot.
     if "sslmode=" not in url:
         url += ("&" if "?" in url else "?") + "sslmode=require"
+
+    # Pooled endpoints run PgBouncer in transaction mode, where a session-level
+    # advisory lock is not held for the length of the session. The indexer uses
+    # one to stop two runs overlapping, and it would fail silently rather than
+    # loudly. Nothing is corrupted if it does — the inserts are idempotent and
+    # the cursor only moves on committed chunks — but the work gets done twice.
+    if "-pooler." in url and not _WARNED:
+        _warn_pooled()
     return url
+
+
+_WARNED = False
+
+
+def _warn_pooled() -> None:
+    global _WARNED
+    _WARNED = True
+    print("  warning: this looks like a pooled connection string (host contains "
+          "'-pooler').\n"
+          "  The indexer's overlap protection needs a session-level advisory "
+          "lock, which\n"
+          "  a transaction pooler does not hold. Prefer the direct connection "
+          "string:\n"
+          "  in the Neon dashboard, switch 'Connection pooling' off when "
+          "copying it.")
 
 
 @contextlib.contextmanager
