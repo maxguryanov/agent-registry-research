@@ -12,7 +12,7 @@ that into a system that keeps measuring and keeps the history.
 Nothing runs continuously. GitHub Actions starts each script on a schedule, it
 finishes in minutes, and it exits. There is no server to keep alive.
 
-**Status: modules 1 to 3 (schema, indexer, prober) are in place. Metrics and publishing are still to come.**
+**Status: modules 1 to 4 (schema, indexer, prober, metrics) are in place. Publishing is still to come.**
 
 ---
 
@@ -296,3 +296,72 @@ Matching covers subdomains. Affected agents are still recorded, with
 
 Measured on 63 agents: 142 seconds. A 2,000-agent panel takes roughly 75 to 90
 minutes, which fits comfortably in a daily scheduled job.
+
+
+---
+
+## Metrics
+
+```bash
+python3 -m monitor.metrics                  # a report on the terminal
+python3 -m monitor.metrics --json out.json  # the aggregate document
+```
+
+Read-only. It writes nothing to the database.
+
+### Three denominators, not one
+
+The same run produces three different answers, and the gap between them is the
+finding, not a rounding error. On a test slice of 63 recently registered
+agents:
+
+| Counted by | live | of | rate |
+|---|---:|---:|---:|
+| agent | 20 | 63 | 31.8% |
+| owner | 1 | 40 | 2.5% |
+| project | 1 | 6 | 16.7% |
+
+Every one of the twenty live agents belonged to a single operator. Counted per
+agent, a third of the registry looks alive. Counted per participant, one
+participant is.
+
+A project is a group of agents connected by a shared owner address or a shared
+root domain, transitively. This is a lower bound on independence: an operator
+using separate wallets *and* separate domains still counts as several projects.
+
+### Censored observations are not deaths
+
+An agent we chose not to probe — `robots_disallowed`, `excluded_by_request` —
+is reported separately and kept out of every denominator. It is a fact about
+our access, not about the agent, and adding the two together would make the
+registry look worse each time someone asks us to leave them alone.
+
+### Every proportion carries a Wilson interval
+
+These proportions sit near zero, where the textbook normal interval starts
+returning negative lower bounds. Wilson does not.
+
+### Survival, and what to show before it exists
+
+Survival is the share of agents observed alive at some time T that are still
+alive at T+30 and T+90. For each agent the anchor is its earliest strictly-live
+observation; the later reading is the check closest to the horizon, accepted
+only within a seven-day window. An agent with no qualifying later check has no
+verdict yet and is counted as not-yet-evaluable, never as dead. Only panel runs
+are used, so the sampling schedule cannot shape the curve.
+
+None of this can produce a number on day one: thirty days of survival needs
+thirty days of measurements. Until then the output reports
+`insufficient_history` and says how many days remain, rather than printing a
+zero that would read as "nobody survived".
+
+Meanwhile there is a figure available immediately — liveness by registration
+month, measured in a single run. It is labelled cross-sectional because that
+is what it is: different agents of different ages compared at one moment,
+with any change in who registers over time mixed into it. It is a useful
+proxy for decay, and it is not survival.
+
+The survival arithmetic was verified against synthetic history with a known
+answer: 50 agents alive at the anchor, 30 alive at day 30, 20 at day 90,
+with decoy checks at days 27 and 33 to confirm the horizon picks the closest
+reading, and 50 never-live agents to confirm they stay out of the denominator.
