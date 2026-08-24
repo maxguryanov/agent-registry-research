@@ -12,7 +12,7 @@ that into a system that keeps measuring and keeps the history.
 Nothing runs continuously. GitHub Actions starts each script on a schedule, it
 finishes in minutes, and it exits. There is no server to keep alive.
 
-**Status: modules 1 and 2 (schema, indexer) are in place. Prober, metrics and publishing are still to come.**
+**Status: modules 1 to 3 (schema, indexer, prober) are in place. Metrics and publishing are still to come.**
 
 ---
 
@@ -189,3 +189,110 @@ would add roughly a hundred thousand calls to the history load.
 The indexer still verifies one real block per chunk and falls back to fetching
 true timestamps if the prediction is ever wrong. Every run reports the largest
 drift it saw, so the assumption cannot quietly rot.
+
+
+---
+
+## The panel
+
+```bash
+python3 -m monitor.panel --target 2000    # size and select
+python3 -m monitor.panel --status         # what is in it
+```
+
+Probing all 64,000 agents daily would mean 64,000 requests a day to other
+people's servers, about three hours per run, and 23 million rows a year. It
+would also buy almost nothing: the 2026 report measured 1,204 agents and got a
+95% interval of ±1.4 points; 2,000 narrows that to ±1.1. A full census removes
+the remaining 1.1 points at thirty times the cost.
+
+Members are chosen by a hash of the agent id. That makes the selection
+reproducible by anyone holding the ids, stable across runs, and automatically
+representative as the registry grows. Membership is only ever added: an agent
+dropped from the panel would leave a hole in every survival curve that already
+counted it.
+
+For a one-off census, `python3 -m monitor.prober --all` records a run of kind
+`sweep` alongside the daily panel runs.
+
+---
+
+## The prober
+
+```bash
+python3 -m monitor.prober --contact you@example.com
+python3 -m monitor.prober --limit 20 --dry-run     # try it, write nothing
+python3 -m monitor.prober --resume 12              # continue an interrupted run
+```
+
+One row per agent per run, in `liveness_checks`, never overwritten.
+
+### It checks the current URI
+
+Liveness is measured against `agents.current_uri`, which the indexer derives
+from the most recent `URIUpdated` event. The registration URI is stored too,
+in `uri_at_registration`, but it is not what gets probed. Agents that mint with
+an empty URI and set it afterwards are common enough to move the result by
+about a third.
+
+### Failure categories are recorded, not collapsed
+
+Every check stores which stage it died at, a failure category, an HTTP status
+and a latency, separately from the six pass/fail flags. Raising the timeout
+does not remove failures, it relabels them: in the 2026 report, going from 10s
+to 30s cut `ReadTimeout` from 55 to 3 and raised HTTP 504 from 0 to 39. The
+agents were unchanged. `check_runs` therefore stores the concurrency, timeout
+and prober version of each run, because two runs are only comparable if you can
+see how each was configured.
+
+Categories distinguish `timeout_connect`, `timeout_read`, `dns_failure`,
+`tls_failure`, `http_404_not_found`, `http_504_gateway_timeout`, `not_json`,
+`schema_mismatch`, `no_services`, `all_endpoints_dead`, `generic_hosts_only`,
+`robots_disallowed` and `excluded_by_request`, among others.
+
+### Strict liveness
+
+An agent is counted live only if a responding endpoint is on a host that is not
+generic. `github.com`, `facebook.com`, public IPFS gateways and the EIP
+specification site all answer HTTP 200 for anyone; a response from them says
+nothing about the agent. In the 2026 report this distinction moved the headline
+figure from 7.3% to 6.8%.
+
+Deliberately not treated as generic: `github.io`, `vercel.app`, `netlify.app`
+and similar, where the subdomain belongs to one project and a response really
+is about that project.
+
+### Politeness is four things, not one
+
+| Control | Default |
+|---|---|
+| overall concurrency | 8, hard-capped at 10 |
+| requests to one host | one at a time |
+| gap between requests to the same host | 0.5s |
+| `robots.txt` | fetched once per host, respected |
+
+Global concurrency alone is not enough, because agents cluster onto shared
+hosts and IPFS gateways: a run limited only by a semaphore can still aim all
+of its capacity at a single server.
+
+A `robots.txt` refusal is recorded as `robots_disallowed`, not as a dead agent.
+It is a fact about our access, not about the agent, and the two must not be
+added together.
+
+### The opt-out is a mechanism, not a promise
+
+The contact address in the `User-Agent` is only worth something if a request to
+stop can be acted on:
+
+```sql
+INSERT INTO excluded_hosts (host, reason, requested_by)
+VALUES ('example.com', 'operator asked by email', 'ops@example.com');
+```
+
+Matching covers subdomains. Affected agents are still recorded, with
+`excluded_by_request`, so they can be told apart from agents that are dead.
+
+### Cost
+
+Measured on 63 agents: 142 seconds. A 2,000-agent panel takes roughly 75 to 90
+minutes, which fits comfortably in a daily scheduled job.

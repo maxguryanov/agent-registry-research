@@ -146,7 +146,7 @@ def apply_schema(conn: psycopg.Connection) -> None:
 
 TABLES = [
     "schema_version", "blocks", "registration_events", "agents",
-    "check_runs", "liveness_checks", "indexer_state",
+    "check_runs", "liveness_checks", "indexer_state", "excluded_hosts",
 ]
 
 

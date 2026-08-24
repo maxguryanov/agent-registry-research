@@ -165,6 +165,37 @@ Aggregate data (per-stage counts, monthly registrations, ownership distribution,
 
 ---
 
+---
+
+## About the monitoring crawler
+
+If you found this repository from a `User-Agent` string in your server logs,
+this section is for you.
+
+```
+ERC8004-registry-monitor/1.0 (+https://github.com/maxguryanov/agent-registry-research; contact: ...)
+```
+
+**What it does.** It requests one JSON document: the URI that an ERC-8004 agent
+published on-chain, pointing at your server. If that document declares service
+endpoints, it sends one `HEAD` request to each, up to five, to see whether they
+answer. It does not log in, submit anything, follow links, or crawl your site.
+
+**How often.** Once a day at most, for agents in a fixed sample of roughly two
+thousand. Requests to the same host are made one at a time with a gap between
+them. `robots.txt` is fetched and respected.
+
+**Why.** To measure how many registered agents actually expose a working
+endpoint, and how that changes over time. Results are published as aggregates.
+Per-agent records and owner addresses are not published.
+
+**To be excluded.** Open an issue on this repository or write to the contact
+address in the `User-Agent`. Exclusion is a row in a database table the crawler
+reads on every run, not a promise to remember: once your host is in it, the
+crawler stops requesting from you and the affected agents are recorded as
+excluded rather than as dead.
+
+
 ## Prior work
 
 Xiong, Li, Wei, Wang, Knottenbelt, Wang. *Can Trustless Agents Be Trusted? An Empirical Study of the ERC-8004 Decentralized AI Agent Ecosystem.* arXiv:2606.26028, July 2026.

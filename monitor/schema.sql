@@ -274,6 +274,29 @@ ON CONFLICT (stream) DO NOTHING;
 
 
 -- ---------------------------------------------------------------------------
+-- Hosts to stay away from.
+--
+-- The prober identifies itself with a contact address. That is only worth
+-- anything if a request to stop can actually be honoured, so this table is the
+-- mechanism behind the promise:
+--
+--   INSERT INTO excluded_hosts (host, reason, requested_by)
+--   VALUES ('example.com', 'operator asked by email', 'ops@example.com');
+--
+-- Matching covers subdomains. Excluded agents are still checked and recorded,
+-- with failure_category 'excluded_by_request', so they can be told apart from
+-- agents that are actually dead.
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS excluded_hosts (
+    host            TEXT PRIMARY KEY,
+    reason          TEXT,
+    requested_by    TEXT,
+    added_at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+
+-- ---------------------------------------------------------------------------
 -- Convenience view: the most recent check for each agent.
 -- ---------------------------------------------------------------------------
 
@@ -285,5 +308,6 @@ ORDER BY agent_id, checked_at DESC, id DESC;
 
 INSERT INTO schema_version (version, note)
 VALUES (1, 'initial monitoring schema'),
-       (2, 'MetadataSet key/value columns')
+       (2, 'MetadataSet key/value columns'),
+       (3, 'excluded_hosts')
 ON CONFLICT (version) DO NOTHING;
