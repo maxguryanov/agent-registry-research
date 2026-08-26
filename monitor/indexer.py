@@ -361,7 +361,7 @@ def main() -> int:
     ap.add_argument("--status", action="store_true",
                     help="report state and exit")
     args = ap.parse_args()
-    return asyncio.run(run(args))
+    return db.guard(lambda: asyncio.run(run(args)))
 
 
 if __name__ == "__main__":

@@ -298,7 +298,7 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--notes", default=None)
     args = ap.parse_args()
-    return asyncio.run(run(args))
+    return db.guard(lambda: asyncio.run(run(args)))
 
 
 if __name__ == "__main__":

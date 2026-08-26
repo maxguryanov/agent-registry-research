@@ -23,6 +23,7 @@ import contextlib
 import os
 import pathlib
 import random
+import sys
 import time
 from typing import Any, Iterable, Iterator, Sequence
 
@@ -38,6 +39,23 @@ STATEMENT_TIMEOUT_MS = 120_000
 
 class ConfigError(RuntimeError):
     """The environment is not set up, as opposed to the database being down."""
+
+
+def guard(action) -> int:
+    """
+    Run a command's body, turning a missing-configuration error into one
+    actionable line and exit code 2.
+
+    Without this each entry point prints a twenty-line traceback whose real
+    content is "you have not set a secret yet", which is a bad way to greet
+    someone on their first run.
+    """
+    try:
+        return action()
+    except ConfigError as exc:
+        print(f"\nerror: {exc}", file=sys.stderr)
+        print("\nSetup steps: monitor/SETUP.md\n", file=sys.stderr)
+        return 2
 
 
 def database_url() -> str:

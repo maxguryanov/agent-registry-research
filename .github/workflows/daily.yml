@@ -36,6 +36,29 @@ jobs:
 
       - run: pip install -r monitor/requirements.txt
 
+      - name: Check the secrets are in place
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error title=Missing secret::DATABASE_URL is not set. \
+          Add it under Settings -> Secrets and variables -> Actions. \
+          See monitor/SETUP.md step 2."
+            exit 1
+          fi
+          case "$DATABASE_URL" in
+            *-pooler.*) echo "::warning title=Pooled connection::The connection \
+          string points at a pooled endpoint. Prefer the direct one; see \
+          monitor/SETUP.md step 1." ;;
+          esac
+          if [ -z "${{ secrets.PROBER_CONTACT }}" ]; then
+            echo "::error title=Missing secret::PROBER_CONTACT is not set. \
+          The prober identifies itself to the servers it contacts and will not \
+          run without an address. See monitor/SETUP.md step 2."
+            exit 1
+          fi
+          echo "Both secrets are set."
+
       - name: Catch up on events first
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -74,6 +97,7 @@ jobs:
 
       - name: Summary
         if: always()
+        continue-on-error: true
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python -m monitor.metrics >> "$GITHUB_STEP_SUMMARY"
