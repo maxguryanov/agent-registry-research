@@ -520,6 +520,7 @@ class BlockClock:
     def __init__(self) -> None:
         self.verifications = 0
         self.max_drift_seconds = 0
+        self.unverified_chunks = 0
 
     def predict(self, block_number: int) -> int:
         return (self.ANCHOR_TIME

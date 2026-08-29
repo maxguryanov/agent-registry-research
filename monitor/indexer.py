@@ -42,6 +42,11 @@ ZERO_ADDRESS = "0x" + "0" * 40
 # connection closes, including on a crash.
 LOCK_KEY = 8004_0001
 
+# How many times one chunk may fail before the run gives up on it. A long
+# backfill crosses hours of public-RPC weather; losing the whole run to one
+# bad minute means starting the wait again.
+CHUNK_RETRIES = 4
+
 STORE_RAW_DATA = os.environ.get("INDEXER_STORE_RAW_DATA", "").lower() in ("1", "true", "yes")
 
 INSERT_EVENT = """
@@ -155,7 +160,18 @@ async def resolve_block_times(pool: chain.RpcPool, clock: chain.BlockClock,
     if not numbers:
         return {}
 
-    drift = await clock.verify(pool, numbers[-1])
+    try:
+        drift = await clock.verify(pool, numbers[-1])
+    except chain.RpcError as exc:
+        # Verification is a safety check on an assumption that has held at
+        # every sampled point across nine million blocks. Losing the check for
+        # one chunk is worth far less than losing the run, so carry on with
+        # the prediction and say so.
+        print(f"    ! could not verify block times this chunk ({exc}); "
+              f"using the predicted times")
+        clock.unverified_chunks += 1
+        return {n: clock.predict(n) for n in numbers}
+
     if drift == 0:
         return {n: clock.predict(n) for n in numbers}
 
@@ -287,7 +303,8 @@ async def run(args) -> int:
         confirmations = args.confirmations \
             if args.confirmations is not None else cursor["confirmations"]
         start = cursor["last_block"] + 1
-        totals = {"events": 0, "inserted": 0, "agents": 0, "chunks": 0}
+        totals = {"events": 0, "inserted": 0, "agents": 0, "chunks": 0,
+                  "chunk_retries": 0}
         stopped_early = None
 
         try:
@@ -317,8 +334,20 @@ async def run(args) -> int:
             while lo <= target:
                 hi = min(target, lo + args.chunk - 1)
 
-                logs, unreadable = await chain.get_logs(
-                    pool, lo, hi, topics=chain.ALL_TOPICS)
+                for retry in range(CHUNK_RETRIES):
+                    try:
+                        logs, unreadable = await chain.get_logs(
+                            pool, lo, hi, topics=chain.ALL_TOPICS)
+                        break
+                    except chain.RpcError as exc:
+                        if retry == CHUNK_RETRIES - 1:
+                            raise
+                        pause = 5 * (retry + 1)
+                        print(f"    ! chunk {lo}-{hi} failed ({exc}); "
+                              f"retrying in {pause}s")
+                        totals["chunk_retries"] += 1
+                        await asyncio.sleep(pause)
+
                 rows = [chain.decode_log(l) for l in logs]
 
                 # Never advance past a range we could not read.
@@ -375,8 +404,12 @@ async def run(args) -> int:
         print(f"rpc calls      : {pool.stats['calls']}  "
               f"(retries {pool.stats['retries']}, "
               f"rate-limited {pool.stats['rate_limited']})")
+        if totals["chunk_retries"]:
+            print(f"chunk retries  : {totals['chunk_retries']}")
         print(f"block clock    : {clock.verifications} checks, "
-              f"max drift {clock.max_drift_seconds}s")
+              f"max drift {clock.max_drift_seconds}s"
+              + (f", {clock.unverified_chunks} chunks unverified"
+                 if clock.unverified_chunks else ""))
         print(f"elapsed        : {time.time() - started:.0f}s")
 
     await pool.aclose()
