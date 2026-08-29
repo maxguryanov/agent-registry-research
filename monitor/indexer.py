@@ -299,6 +299,8 @@ async def run(args) -> int:
             await pool.aclose()
             return 0 if args.status else 1
 
+        db.ensure_schema(conn)
+
         if args.status:
             try:
                 tip = await pool.block_number()

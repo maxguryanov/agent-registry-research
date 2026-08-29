@@ -32,6 +32,13 @@ from psycopg.rows import dict_row
 
 SCHEMA_PATH = pathlib.Path(__file__).with_name("schema.sql")
 
+# The highest version schema.sql knows how to produce. When a database is
+# behind this, the running code and the tables it writes to disagree, and the
+# symptom is a column that does not exist in the middle of a job. Since every
+# statement in schema.sql is idempotent, the fix is simply to apply it again,
+# which the writers do for themselves rather than waiting to be told.
+SCHEMA_VERSION = 4
+
 CONNECT_ATTEMPTS = 6
 CONNECT_BASE_DELAY = 1.5   # seconds, doubled each attempt, plus jitter
 STATEMENT_TIMEOUT_MS = 120_000
@@ -206,6 +213,34 @@ def schema_ready(conn: psycopg.Connection) -> bool:
 NOT_CREATED = ("The tables have not been created yet.\n"
                "  Actions -> Operations -> Run workflow -> task: create-tables\n"
                "  or locally: python3 -m monitor.init_db")
+
+
+def schema_version(conn: psycopg.Connection) -> int:
+    """Highest applied schema version, 0 if nothing has been created."""
+    try:
+        return int(scalar(
+            conn, "SELECT COALESCE(max(version), 0) FROM schema_version") or 0)
+    except psycopg.Error:
+        conn.rollback()
+        return 0
+
+
+def ensure_schema(conn: psycopg.Connection) -> bool:
+    """
+    Bring an existing database up to the version this code expects.
+
+    Returns True if anything was applied. A database with nothing in it is
+    left alone: creating it is init_db's job, and doing it silently here would
+    hide a missing setup step.
+    """
+    current = schema_version(conn)
+    if current == 0 or current >= SCHEMA_VERSION:
+        return False
+    print(f"  db: schema is at v{current}, this code expects v{SCHEMA_VERSION}; "
+          f"applying the difference")
+    apply_schema(conn)
+    print(f"  db: schema now at v{schema_version(conn)}")
+    return True
 
 
 def status(conn: psycopg.Connection) -> list[tuple[str, int | str]]:

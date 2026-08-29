@@ -127,6 +127,8 @@ async def run(args) -> int:
     concurrency = min(args.concurrency, MAX_CONCURRENCY)
 
     with db.connect() as conn:
+        db.ensure_schema(conn)
+
         run_id = args.resume
         if run_id:
             row = db.fetch_one(conn, "SELECT * FROM check_runs WHERE id = %s",

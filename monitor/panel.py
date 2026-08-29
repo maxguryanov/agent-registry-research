@@ -124,6 +124,7 @@ def main() -> int:
         if not db.schema_ready(conn):
             print(db.NOT_CREATED)
             return 0 if args.status else 1
+        db.ensure_schema(conn)
 
         if args.status or (args.target is None and args.rate is None):
             status(conn)
