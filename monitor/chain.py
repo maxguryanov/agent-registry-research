@@ -329,6 +329,17 @@ class RpcPool:
                      "Content-Type": "application/json"},
         )
 
+    def describe(self) -> list[str]:
+        """Endpoint hosts, without paths or keys. Safe to print in a log."""
+        out = []
+        for url in self.urls:
+            try:
+                parts = httpx.URL(url)
+                out.append(f"{parts.scheme}://{parts.host}")
+            except Exception:  # noqa: BLE001
+                out.append("(unparseable url)")
+        return out
+
     def available(self, method: str) -> list[str]:
         live = [u for u in self.urls if (u, method) not in self._retired]
         # If everything has been retired for a method, the diagnosis was
@@ -373,10 +384,12 @@ class RpcPool:
                     self.stats["rate_limited"] += 1
                     await self._sleep(attempt, rate_limited=True)
                     continue
-                if resp.status_code in (401, 403, 404, 405):
-                    # An endpoint that answers eth_blockNumber but returns 403
-                    # for eth_getLogs is refusing the method, not failing at
-                    # it. Retrying costs attempts that a working endpoint
+                if 400 <= resp.status_code < 500 and resp.status_code not in (408, 429):
+                    # A 4xx that is not a timeout or a rate limit says the
+                    # request will not be accepted at this endpoint however
+                    # many times it is repeated: a key without the network
+                    # enabled, a method not served, an account without archive
+                    # access. Retrying burns the attempts a working endpoint
                     # needs, so drop it for this method and move on.
                     last = f"HTTP {resp.status_code} from {url}"
                     self._retire(url, method, f"HTTP {resp.status_code}")

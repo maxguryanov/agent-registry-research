@@ -279,6 +279,19 @@ async def run(args) -> int:
     pool = chain.RpcPool()
     clock = chain.BlockClock()
 
+    # Hosts only, never the key. Secrets are masked in the log, so without
+    # this there is no way to tell a one-endpoint pool from a four-endpoint
+    # one, or a Base endpoint from an Ethereum one.
+    hosts = pool.describe()
+    print(f"rpc endpoints  : {len(hosts)}")
+    for host in hosts:
+        print(f"                 {host}")
+    if not any("base" in h for h in hosts):
+        print("  ! none of these look like a Base endpoint. This indexer reads "
+              "the Base chain;\n    an Ethereum endpoint will answer, and "
+              "find nothing.")
+    print()
+
     with db.connect() as conn:
         cursor = load_cursor(conn, args.stream)
         if cursor is None:
