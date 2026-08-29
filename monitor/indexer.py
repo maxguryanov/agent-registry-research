@@ -190,12 +190,28 @@ def store_chunk(conn, rows: list[dict], times: dict[int, int],
 
         cur.execute(
             "UPDATE indexer_state SET last_block = %s, last_run_at = now(), "
+            "last_advance_at = now(), "
             "last_run_status = 'ok', last_error = NULL, "
             "events_ingested = events_ingested + %s, updated_at = now() "
             "WHERE stream = %s",
             (new_cursor, inserted, stream))
     conn.commit()
     return inserted, len(ids) if rows else 0
+
+
+def hours_since_advance(conn, stream: str) -> float | None:
+    """
+    How long since the cursor last moved. None if it never has.
+
+    Used to tell a passing network failure from a stall. The chain being
+    briefly unreachable is normal and self-correcting; the same failure every
+    hour for a day is not, and the difference is not visible in any single run.
+    """
+    value = db.scalar(
+        conn,
+        "SELECT EXTRACT(EPOCH FROM (now() - last_advance_at)) / 3600.0 "
+        "FROM indexer_state WHERE stream = %s", (stream,))
+    return None if value is None else float(value)
 
 
 def record_failure(conn, stream: str, message: str) -> None:
@@ -212,6 +228,34 @@ def record_failure(conn, stream: str, message: str) -> None:
 
 # ---------------------------------------------------------------------------
 
+async def report_unreachable(conn, pool, args, exc) -> int:
+    """
+    The chain could not be reached. Decide whether that is a hiccup or a stall.
+
+    The cursor has not moved, so the next run picks up from the same block and
+    nothing is lost. An hourly job that goes red every time a public RPC
+    hiccups teaches you to ignore red runs, which is worse than the hiccup. So
+    this is a warning while it is plausibly temporary, and an error once the
+    cursor has been stuck long enough that it plainly is not.
+    """
+    record_failure(conn, args.stream, f"{type(exc).__name__}: {exc}")
+    stalled = hours_since_advance(conn, args.stream)
+    stuck = stalled is None or stalled > args.fail_on_stall_hours
+    how_long = "never" if stalled is None else f"{stalled:.1f} hours ago"
+    detail = (f"Could not reach the chain: {exc}. The cursor has not moved; "
+              f"the next run resumes from the same block. "
+              f"Last advance: {how_long}.")
+    print()
+    if stuck:
+        print(f"::error title=Indexer stalled::{detail} That is longer than "
+              f"the {args.fail_on_stall_hours}h threshold, so it is reported "
+              f"as a failure rather than a hiccup.")
+    else:
+        print(f"::warning title=Chain unreachable::{detail}")
+    await pool.aclose()
+    return 1 if stuck else 0
+
+
 async def run(args) -> int:
     started = time.time()
     pool = chain.RpcPool()
@@ -225,7 +269,13 @@ async def run(args) -> int:
             return 0 if args.status else 1
 
         if args.status:
-            report(conn, cursor, await pool.block_number())
+            try:
+                tip = await pool.block_number()
+            except chain.RpcError as exc:
+                tip = None
+                print(f"note: the chain is unreachable right now ({exc}).\n"
+                      f"      Everything below comes from the database.\n")
+            report(conn, cursor, tip)
             await pool.aclose()
             return 0
 
@@ -236,10 +286,16 @@ async def run(args) -> int:
 
         confirmations = args.confirmations \
             if args.confirmations is not None else cursor["confirmations"]
-        tip = await pool.block_number()
-        target = tip - confirmations
         start = cursor["last_block"] + 1
+        totals = {"events": 0, "inserted": 0, "agents": 0, "chunks": 0}
+        stopped_early = None
 
+        try:
+            tip = await pool.block_number()
+        except chain.RpcError as exc:
+            return await report_unreachable(conn, pool, args, exc)
+
+        target = tip - confirmations
         if args.max_blocks:
             target = min(target, start + args.max_blocks - 1)
 
@@ -255,9 +311,6 @@ async def run(args) -> int:
               f"({target - start + 1:,} blocks)")
         print(f"chunk size     : {args.chunk:,} blocks")
         print()
-
-        totals = {"events": 0, "inserted": 0, "agents": 0, "chunks": 0}
-        stopped_early = None
 
         try:
             lo = start
@@ -298,6 +351,9 @@ async def run(args) -> int:
                     stopped_early = f"time budget of {args.max_seconds}s reached"
                     break
 
+        except chain.RpcError as exc:
+            return await report_unreachable(conn, pool, args, exc)
+
         except Exception as exc:  # noqa: BLE001
             record_failure(conn, args.stream, f"{type(exc).__name__}: {exc}")
             print(f"\nFAILED: {type(exc).__name__}: {exc}")
@@ -327,13 +383,17 @@ async def run(args) -> int:
     return 0
 
 
-def report(conn, cursor: dict, tip: int) -> None:
+def report(conn, cursor: dict, tip: int | None) -> None:
     print(f"stream         : {cursor['stream']}")
     print(f"cursor         : {cursor['last_block']:,}")
-    print(f"chain tip      : {tip:,}  "
-          f"({tip - cursor['last_block']:,} blocks behind)")
+    if tip is None:
+        print("chain tip      : unknown (chain unreachable)")
+    else:
+        print(f"chain tip      : {tip:,}  "
+              f"({tip - cursor['last_block']:,} blocks behind)")
     print(f"last run       : {cursor['last_run_at'] or 'never'}  "
           f"{cursor['last_run_status'] or ''}")
+    print(f"last advance   : {cursor.get('last_advance_at') or 'never'}")
     if cursor["last_error"]:
         print(f"last error     : {cursor['last_error']}")
     print()
@@ -365,6 +425,9 @@ def main() -> int:
                     help="stop cleanly after this many seconds (0 = no limit)")
     ap.add_argument("--confirmations", type=int, default=None,
                     help="override how far behind the tip to stop")
+    ap.add_argument("--fail-on-stall-hours", type=float, default=6.0,
+                    help="how long the cursor may stay stuck before an "
+                         "unreachable chain is reported as a failure")
     ap.add_argument("--status", action="store_true",
                     help="report state and exit")
     args = ap.parse_args()

@@ -255,10 +255,16 @@ CREATE TABLE IF NOT EXISTS indexer_state (
 
     last_run_at         TIMESTAMPTZ,
     last_run_status     TEXT,
+    -- When the cursor last moved forward, as opposed to when a run last
+    -- happened. The difference is what tells a passing network hiccup from a
+    -- stall that nobody has noticed.
+    last_advance_at     TIMESTAMPTZ,
     last_error          TEXT,
     events_ingested     BIGINT        NOT NULL DEFAULT 0,
     updated_at          TIMESTAMPTZ   NOT NULL DEFAULT now()
 );
+
+ALTER TABLE indexer_state ADD COLUMN IF NOT EXISTS last_advance_at TIMESTAMPTZ;
 
 -- Seed the Base Identity Registry stream. last_block = start_block - 1 means
 -- "nothing ingested yet"; the first indexer run begins at the deploy block.
@@ -309,5 +315,6 @@ ORDER BY agent_id, checked_at DESC, id DESC;
 INSERT INTO schema_version (version, note)
 VALUES (1, 'initial monitoring schema'),
        (2, 'MetadataSet key/value columns'),
-       (3, 'excluded_hosts')
+       (3, 'excluded_hosts'),
+       (4, 'indexer_state.last_advance_at')
 ON CONFLICT (version) DO NOTHING;
