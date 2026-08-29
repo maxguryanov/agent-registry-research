@@ -30,6 +30,7 @@ from typing import Any, Iterable, Sequence
 
 import httpx
 
+from .db import strip_nulls
 from .keccak import event_topic, function_selector
 
 CHAIN_ID = 8453
@@ -226,6 +227,7 @@ def decode_log(log: dict) -> dict:
         "raw_topics": json.dumps(topics),
         "raw_data": log.get("data", "0x"),
         "decode_error": None,
+        "sanitized": False,
     }
 
     ev = EVENTS.get(topic0)
@@ -258,6 +260,16 @@ def decode_log(log: dict) -> dict:
     except Exception as exc:  # noqa: BLE001 - a bad log must not stop the run
         row["event_type"] = "unknown"
         row["decode_error"] = f"{type(exc).__name__}: {exc}"
+
+    # Strings decoded from chain data are written by whoever sent the
+    # transaction and are not obliged to be storable. Where one has to be
+    # altered to fit, keep the untouched payload alongside it so the original
+    # is still recoverable.
+    for field in ("agent_uri", "metadata_key", "metadata_value"):
+        cleaned = strip_nulls(row[field])
+        if cleaned is not row[field]:
+            row[field] = cleaned
+            row["sanitized"] = True
 
     return row
 

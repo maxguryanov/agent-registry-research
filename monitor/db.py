@@ -224,6 +224,23 @@ def status(conn: psycopg.Connection) -> list[tuple[str, int | str]]:
 # Small conversions
 # ---------------------------------------------------------------------------
 
+def strip_nulls(value: Any) -> Any:
+    """
+    Remove NUL bytes from a string.
+
+    Postgres text columns cannot hold 0x00, and anything decoded from chain
+    data or fetched from a stranger's server can contain one. A single such
+    byte otherwise aborts the whole transaction, which is how a backfill comes
+    to stop at exactly the same block every time it is run.
+
+    Returns the value unchanged when there is nothing to strip, so callers can
+    tell whether anything was altered.
+    """
+    if isinstance(value, str) and "\x00" in value:
+        return value.replace("\x00", "")
+    return value
+
+
 def to_int(value: Any) -> int | None:
     """
     agent_id is NUMERIC(78,0) because a uint256 does not fit in a bigint,

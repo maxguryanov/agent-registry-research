@@ -196,10 +196,12 @@ def store_chunk(conn, rows: list[dict], times: dict[int, int],
                 times.get(r["block_number"]), r["tx_hash"], r["log_index"],
                 r["topic0"], r["owner"], r["from_address"], r["agent_uri"],
                 r["metadata_key"], r["metadata_value"], r["raw_topics"],
-                r["raw_data"] if (STORE_RAW_DATA or r["event_type"] == "unknown") else None,
+                r["raw_data"] if (STORE_RAW_DATA or r["event_type"] == "unknown"
+                                  or r.get("sanitized")) else None,
             ))
             inserted += cur.rowcount
 
+        sanitized = sum(1 for r in rows if r.get("sanitized"))
         ids = sorted({r["agent_id"] for r in rows if r["agent_id"] is not None})
         if ids:
             cur.execute(REBUILD_AGENTS, {"ids": ids, "zero": ZERO_ADDRESS})
@@ -212,7 +214,7 @@ def store_chunk(conn, rows: list[dict], times: dict[int, int],
             "WHERE stream = %s",
             (new_cursor, inserted, stream))
     conn.commit()
-    return inserted, len(ids) if rows else 0
+    return inserted, len(ids) if rows else 0, sanitized
 
 
 def hours_since_advance(conn, stream: str) -> float | None:
@@ -304,7 +306,7 @@ async def run(args) -> int:
             if args.confirmations is not None else cursor["confirmations"]
         start = cursor["last_block"] + 1
         totals = {"events": 0, "inserted": 0, "agents": 0, "chunks": 0,
-                  "chunk_retries": 0}
+                  "chunk_retries": 0, "sanitized": 0}
         stopped_early = None
 
         try:
@@ -356,13 +358,14 @@ async def run(args) -> int:
                     rows = [r for r in rows if r["block_number"] <= commit_to]
 
                 times = await resolve_block_times(pool, clock, rows)
-                inserted, agents = store_chunk(
+                inserted, agents, sanitized = store_chunk(
                     conn, rows, times, args.stream, commit_to)
 
                 totals["events"] += len(rows)
                 totals["inserted"] += inserted
                 totals["agents"] += agents
                 totals["chunks"] += 1
+                totals["sanitized"] += sanitized
 
                 if rows or totals["chunks"] % 20 == 0:
                     pct = 100 * (hi - start + 1) / max(1, target - start + 1)
@@ -406,6 +409,9 @@ async def run(args) -> int:
               f"rate-limited {pool.stats['rate_limited']})")
         if totals["chunk_retries"]:
             print(f"chunk retries  : {totals['chunk_retries']}")
+        if totals["sanitized"]:
+            print(f"nul bytes      : {totals['sanitized']} event(s) contained a "
+                  f"NUL byte; it was stripped and the raw payload kept")
         print(f"block clock    : {clock.verifications} checks, "
               f"max drift {clock.max_drift_seconds}s"
               + (f", {clock.unverified_chunks} chunks unverified"

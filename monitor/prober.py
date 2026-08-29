@@ -205,7 +205,11 @@ async def run(args) -> int:
 
                 if not args.dry_run:
                     row["run_id"] = run_id
-                    payload = {k: v for k, v in row.items()
+                    # Everything here that is text came from a document on
+                    # someone else's server, which is under no obligation to
+                    # produce something Postgres will store. A single NUL byte
+                    # in a type field would otherwise abort the whole run.
+                    payload = {k: db.strip_nulls(v) for k, v in row.items()
                                if k not in ("uri_host", "uri_root_domain")}
                     counters["written"] += db.execute(conn, INSERT_CHECK, payload)
                     if row["uri_host"]:
