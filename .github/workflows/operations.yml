@@ -132,17 +132,7 @@ jobs:
 
       - name: Publish if the task produced new figures
         if: ${{ inputs.task == 'probe-now' || inputs.task == 'publish-now' || inputs.task == 'full-sweep' }}
-        run: |
-          python -m monitor.publish
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
-          if git diff --staged --quiet; then
-            echo "figures unchanged, nothing to commit"
-          else
-            git commit -m "Publish figures ($( date -u +%Y-%m-%d ), ${{ inputs.task }})"
-            git push
-          fi
+        run: .github/scripts/publish.sh "Publish figures ($(date -u +%Y-%m-%d), ${{ inputs.task }})"
 
       - name: Summary
         if: always()

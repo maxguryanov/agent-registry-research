@@ -78,22 +78,10 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: python -m monitor.prober --concurrency 8 --timeout 20
 
-      - name: Build the page and the API
+      - name: Build the page and publish it
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: python -m monitor.publish
-
-      - name: Commit the published figures
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
-          if git diff --staged --quiet; then
-            echo "figures unchanged, nothing to commit"
-          else
-            git commit -m "Publish figures for $(date -u +%Y-%m-%d)"
-            git push
-          fi
+        run: .github/scripts/publish.sh "Publish figures for $(date -u +%Y-%m-%d)"
 
       - name: Summary
         if: always()
