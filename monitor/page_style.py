@@ -39,6 +39,24 @@ h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.02e
 .sub { color: var(--muted); margin: 0 0 14px; font-size: 17px; }
 .stamp { color: var(--faint); font-size: 13px; font-family: var(--mono); }
 
+.headline {
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start;
+  margin: 30px 0 6px; padding: 24px 26px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+}
+.headline .num {
+  font-size: 62px; font-weight: 680; line-height: 0.95; letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap;
+}
+.headline .say { font-size: 18px; line-height: 1.5; }
+.headline .say strong { font-weight: 650; }
+.headline .qual { display: block; margin-top: 8px; font-size: 14.5px; color: var(--muted); }
+@media (max-width: 560px) {
+  .headline { grid-template-columns: 1fr; gap: 10px; padding: 20px; }
+  .headline .num { font-size: 50px; }
+  .headline .say { font-size: 16.5px; }
+}
+
 h2 {
   font-size: 13px; text-transform: uppercase; letter-spacing: 0.09em;
   color: var(--muted); margin: 44px 0 4px; font-weight: 600;

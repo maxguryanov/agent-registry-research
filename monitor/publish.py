@@ -26,6 +26,7 @@ from . import charts, db, metrics
 from .page_style import STYLE
 
 REPO_URL = "https://github.com/maxguryanov/agent-registry-research"
+SITE_URL = "https://maxguryanov.github.io/agent-registry-research/"
 esc = charts.esc
 
 
@@ -149,10 +150,49 @@ def survival_section(survival: dict) -> str:
 # Page
 # ---------------------------------------------------------------------------
 
+# A tab icon, as an inline data URI so the page still fetches nothing.
+FAVICON = ("data:image/svg+xml,"
+           "%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
+           "%3Crect width='32' height='32' rx='7' fill='%232f6fd0'/%3E"
+           "%3Crect x='7' y='7' width='18' height='4' rx='2' fill='white'/%3E"
+           "%3Crect x='7' y='14' width='12' height='4' rx='2' fill='white' "
+           "opacity='.72'/%3E"
+           "%3Crect x='7' y='21' width='5' height='4' rx='2' fill='white' "
+           "opacity='.45'/%3E%3C/svg%3E")
+
+
+def headline(doc: dict) -> tuple[str, str]:
+    """
+    The one sentence this page exists to say, and the number in it.
+
+    Also used as the description a link preview shows, so it has to stand on
+    its own with no page around it.
+    """
+    registry = doc["registry"]
+    liveness = doc["liveness"]
+    total = f"{registry['agents']:,}"
+
+    if liveness.get("status") != "ok":
+        return ("", f"{total} agents are registered in the ERC-8004 Identity "
+                    f"Registry on Base. How many of them work is measured here "
+                    f"daily; the first measurement has not run yet.")
+
+    agent = liveness["by_agent"]["stages"][-1]
+    owner = liveness["by_owner"]["stages"][-1]
+    if agent.get("pct") is None:
+        return ("", f"{total} agents registered. No liveness measurement yet.")
+
+    return (f'{agent["pct"]:.1f}%',
+            f'of the {total} agents registered in the ERC-8004 Identity Registry '
+            f'on Base expose an endpoint that answers. Counted per owner rather '
+            f'than per agent, it is {owner["pct"]:.1f}%.')
+
+
 def build_page(doc: dict) -> str:
     registry = doc["registry"]
     liveness = doc["liveness"]
     generated = doc["generated_at"][:16].replace("T", " ")
+    number, sentence = headline(doc)
 
     cards = [
         card("agents registered", f'{registry["agents"]:,}',
@@ -164,7 +204,19 @@ def build_page(doc: dict) -> str:
         cards.append(card("changed URI after mint", f'{churn["pct"]:.1f}%',
                           f'{churn["k"]:,} agents'))
 
-    body = [f'<div class="cards">{"".join(cards)}</div>']
+    body = []
+    if number:
+        body.append(
+            '<div class="headline">'
+            f'<div class="num">{esc(number)}</div>'
+            f'<div class="say">{esc(sentence)}'
+            '<span class="qual">A responding endpoint is not a working agent: '
+            'nothing here completes a handshake or exercises a task. '
+            'The figure is an upper bound.</span></div></div>')
+    else:
+        body.append(f'<div class="headline"><div class="say">{esc(sentence)}'
+                    '</div></div>')
+    body.append(f'<div class="cards">{"".join(cards)}</div>')
 
     if liveness.get("status") != "ok":
         body.append(
@@ -173,19 +225,10 @@ def build_page(doc: dict) -> str:
             'The funnel appears here after the first run.</p></div>')
     else:
         run = liveness["run"]
-        by_agent = liveness["by_agent"]["stages"][-1]
-        by_owner = liveness["by_owner"]["stages"][-1]
-        by_project = liveness["by_project"]["stages"][-1]
 
-        body.append('<div class="cards">'
-                    + card("live, per agent", pct_cell(by_agent),
-                           f'{by_agent["k"]:,} of {by_agent["n"]:,}')
-                    + card("live, per owner", pct_cell(by_owner),
-                           f'{by_owner["k"]:,} of {by_owner["n"]:,}')
-                    + card("live, per project", pct_cell(by_project),
-                           f'{by_project["k"]:,} of {by_project["n"]:,}')
-                    + '</div>')
-
+        # The three liveness rates are already in the headline and in the
+        # table immediately below. A row of cards repeating them would be the
+        # third time on one screen.
         body.append('<h2>The same registry, three denominators</h2>')
         body.append(
             '<p class="note">One operator running many wallets is many agents '
@@ -301,14 +344,28 @@ def build_page(doc: dict) -> str:
         f'{esc(REPO_URL.split("//")[1])}</a>. '
         f'Per-agent records and owner addresses are not published.</p></footer>')
 
+    title = "ERC-8004 agents on Base: how many actually work"
+    share = (f"{number} {sentence}" if number else sentence)
+
     return (
         "<!doctype html>\n"
         '<html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        "<title>ERC-8004 Agent Registry Monitor</title>"
-        '<meta name="description" content="Continuous measurement of how many '
-        'agents registered in the ERC-8004 Identity Registry on Base actually '
-        'expose a working endpoint.">'
+        f"<title>{esc(title)}</title>"
+        f'<meta name="description" content="{esc(share)}">'
+        # What a shared link shows. Without these it unfurls as a bare URL,
+        # which is the difference between a link people open and one they
+        # scroll past. No image: the platforms that matter will not render an
+        # SVG, and this page has no way to make a raster one without pulling in
+        # a dependency it otherwise does not need.
+        f'<meta property="og:title" content="{esc(title)}">'
+        f'<meta property="og:description" content="{esc(share)}">'
+        '<meta property="og:type" content="website">'
+        f'<meta property="og:url" content="{esc(SITE_URL)}">'
+        '<meta name="twitter:card" content="summary">'
+        f'<meta name="twitter:title" content="{esc(title)}">'
+        f'<meta name="twitter:description" content="{esc(share)}">'
+        f'<link rel="icon" href="{FAVICON}">'
         f"<style>{STYLE}</style></head><body><div class=\"wrap\">"
         "<header><h1>ERC-8004 agents on Base: how many actually work</h1>"
         '<p class="sub">Continuous measurement of the Identity Registry. '
