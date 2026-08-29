@@ -346,6 +346,8 @@ def registry_totals(conn) -> dict:
         "events": {e["event_type"]: e["n"] for e in events},
         "indexed_through_block": cursor["last_block"] if cursor else None,
         "indexer_last_run": iso(cursor["last_run_at"]) if cursor else None,
+        "indexer_last_status": cursor["last_run_status"] if cursor else None,
+        "indexer_last_error": cursor["last_error"] if cursor else None,
     }
 
 
@@ -507,6 +509,14 @@ def report(document: dict) -> None:
     print(f"empty URI at mint       : {registry['empty_uri_at_registration']:,}")
     print("events                  : "
           + ", ".join(f"{k} {v:,}" for k, v in registry["events"].items()))
+
+    if registry.get("indexer_last_status") == "error" and registry.get("indexer_last_error"):
+        print()
+        print("!! THE LAST INDEXER RUN FAILED")
+        print(f"   when  : {registry['indexer_last_run']}")
+        print(f"   error : {registry['indexer_last_error']}")
+        print("   The cursor above is where it stopped. Nothing was lost; the "
+              "next run resumes there.")
 
     liveness = document["liveness"]
     if liveness.get("status") != "ok":
