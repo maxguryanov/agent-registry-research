@@ -192,6 +192,22 @@ TABLES = [
 ]
 
 
+def schema_ready(conn: psycopg.Connection) -> bool:
+    """
+    Whether the schema has been created.
+
+    Reporting commands are run before setup at least once by everybody, and
+    "relation indexer_state does not exist" is a worse answer to "what is the
+    state of things" than "nothing has been created yet".
+    """
+    return scalar(conn, "SELECT to_regclass('public.indexer_state') IS NOT NULL")
+
+
+NOT_CREATED = ("The tables have not been created yet.\n"
+               "  Actions -> Operations -> Run workflow -> task: create-tables\n"
+               "  or locally: python3 -m monitor.init_db")
+
+
 def status(conn: psycopg.Connection) -> list[tuple[str, int | str]]:
     """Row count per table, for a quick 'is it alive' check."""
     out: list[tuple[str, int | str]] = []

@@ -121,6 +121,10 @@ def main() -> int:
     args = ap.parse_args()
 
     with db.connect() as conn:
+        if not db.schema_ready(conn):
+            print(db.NOT_CREATED)
+            return 0 if args.status else 1
+
         if args.status or (args.target is None and args.rate is None):
             status(conn)
             return 0

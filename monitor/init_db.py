@@ -47,6 +47,11 @@ def main() -> int:
         for table, count in db.status(conn):
             print(f"{table:<24}{count:>10}")
 
+        if not db.schema_ready(conn):
+            print()
+            print(db.NOT_CREATED)
+            return 0
+
         cursor = db.fetch_one(
             conn,
             "SELECT stream, start_block, last_block, confirmations, "

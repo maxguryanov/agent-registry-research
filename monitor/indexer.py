@@ -128,7 +128,10 @@ ON CONFLICT (agent_id) DO UPDATE SET
 
 # ---------------------------------------------------------------------------
 
-def load_cursor(conn, stream: str) -> dict:
+def load_cursor(conn, stream: str):
+    """Returns the cursor row, or None if the schema is not created yet."""
+    if not db.schema_ready(conn):
+        return None
     row = db.fetch_one(
         conn, "SELECT * FROM indexer_state WHERE stream = %s", (stream,))
     if row is None:
@@ -216,6 +219,10 @@ async def run(args) -> int:
 
     with db.connect() as conn:
         cursor = load_cursor(conn, args.stream)
+        if cursor is None:
+            print(db.NOT_CREATED)
+            await pool.aclose()
+            return 0 if args.status else 1
 
         if args.status:
             report(conn, cursor, await pool.block_number())

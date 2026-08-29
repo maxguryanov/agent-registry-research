@@ -587,6 +587,9 @@ def main() -> int:
 
     started = time.time()
     with db.connect() as conn:
+        if not db.schema_ready(conn):
+            print(db.NOT_CREATED)
+            return 0
         document = build(conn, args.run)
 
     if not args.quiet:
