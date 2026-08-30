@@ -39,9 +39,15 @@ from datetime import datetime, timedelta, timezone
 from . import db
 from .hosts import is_shared_hosting
 
-# Outcomes that mean "we did not measure this agent", as opposed to
-# "we measured it and it was dead".
-CENSORED_CATEGORIES = {"excluded_by_request", "robots_disallowed"}
+# Outcomes that mean "we did not measure this agent", as opposed to "we
+# measured it and it was dead". Two of them are our own choice; the third is
+# an agent that answered 429 or 403 on both a normal and a deliberately slow
+# pass, where the result turned on our access rather than on the agent.
+#
+# These are reported and kept out of every denominator. Counting them as dead
+# would let the registry look worse the harder someone defends their server.
+CENSORED_CATEGORIES = {"excluded_by_request", "robots_disallowed",
+                       "undetermined"}
 
 STAGES = [
     ("s1_uri_present", "non-empty URI"),
@@ -454,7 +460,9 @@ def build(conn, run_id: int | None = None) -> dict:
         },
         "censored": {
             "n": len(censored),
-            "note": "not probed by our own choice; excluded from the denominators",
+            "note": ("not measured: excluded by request, disallowed by "
+                     "robots.txt, or throttled on both passes. Kept out of "
+                     "every denominator rather than counted as dead."),
             "by_category": failure_breakdown(censored),
         },
         "by_agent": funnel_over_agents(analysed),
@@ -542,8 +550,10 @@ def report(document: dict) -> None:
               f"concurrency {run['concurrency']}, timeout {run['timeout_seconds']}s, "
               f"prober {run['prober_version']}")
         if liveness["censored"]["n"]:
-            print(f"censored (not probed by our choice): {liveness['censored']['n']:,}"
+            print(f"not measured: {liveness['censored']['n']:,}"
                   f"  — excluded from every denominator below")
+            for c in liveness["censored"]["by_category"]:
+                print(f"    {c['category']:<28}{c['n']:>7,}")
 
         print_funnel("FUNNEL BY AGENT", liveness["by_agent"])
         print_funnel("FUNNEL BY OWNER", liveness["by_owner"])

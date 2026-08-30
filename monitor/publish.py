@@ -268,11 +268,20 @@ def build_page(doc: dict) -> str:
         body.append(failures_table(liveness["failures"]))
 
         if liveness["censored"]["n"]:
+            rows = ", ".join(
+                f'{c["n"]:,} {c["category"].replace("_", " ")}'
+                for c in liveness["censored"]["by_category"])
             body.append(
                 f'<p class="note"><strong>{liveness["censored"]["n"]:,}</strong> '
-                f'agents were not probed because robots.txt disallowed it or '
-                f'their operator asked to be excluded. They are left out of '
-                f'every denominator above rather than counted as dead.</p>')
+                f'agents are not measured rather than dead ({esc(rows)}). '
+                f'Every rate on this page is over the agents that were '
+                f'measured; these are left out of the denominator.</p>'
+                '<p class="note"><code>undetermined</code> means the server '
+                'answered 429 or 403 on a normal pass and again on a second, '
+                'deliberately slow one, two requests at a time and seconds '
+                'apart. That result turns on our access, not on the agent. '
+                'Counting it as dead would make the registry look worse the '
+                'harder someone defends their server.</p>')
 
     body.append('<h2>Registrations over time</h2>')
     body.append('<p class="note">Bars: registrations per month. '

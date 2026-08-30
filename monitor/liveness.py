@@ -300,6 +300,26 @@ def classify_exception(exc: BaseException) -> str:
     return f"transport_{name.lower()}"
 
 
+# Answers that say something about our access rather than about the agent.
+# A 429 is our rate limit; a 403 is very often bot protection. Counting either
+# as a dead agent measures the crawler, not the registry.
+THROTTLED_CATEGORIES = {"http_429_rate_limited", "http_403_forbidden"}
+
+
+def looks_throttled(row: dict) -> bool:
+    """Did this result turn on being throttled rather than on the agent?"""
+    if row.get("live_strict"):
+        return False
+    if row.get("failure_category") in THROTTLED_CATEGORIES:
+        return True
+    # The document loaded but every declared endpoint answered 403 or 429.
+    if row.get("failure_category") == "all_endpoints_dead":
+        detail = str(row.get("endpoint_details") or "")
+        if ('"status": 429' in detail or '"status": 403' in detail):
+            return True
+    return False
+
+
 def classify_http(status: int) -> str:
     named = {401: "http_401_unauthorized", 403: "http_403_forbidden",
              404: "http_404_not_found", 410: "http_410_gone",
