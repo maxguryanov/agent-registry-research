@@ -1,37 +1,11 @@
 {
-  "generated_at": "2026-08-30T13:17:07.923004+00:00",
+  "generated_at": "2026-08-30T13:36:54.128620+00:00",
   "top_projects": [
-    {
-      "agents": 308,
-      "owners": 306,
-      "domains": [
-        "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
-      ],
-      "live_agents": 0,
-      "label": "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
-    },
-    {
-      "agents": 257,
-      "owners": 254,
-      "domains": [
-        "ipfs.io"
-      ],
-      "live_agents": 0,
-      "label": "ipfs.io"
-    },
-    {
-      "agents": 81,
-      "owners": 81,
-      "domains": [
-        "pinata.cloud"
-      ],
-      "live_agents": 0,
-      "label": "pinata.cloud"
-    },
     {
       "agents": 72,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -39,35 +13,28 @@
       "agents": 59,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 57,
-      "owners": 4,
-      "domains": [
-        "base.eth",
+      "agents": 50,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [
         "localhost",
         "wild-west-bots.vercel.app"
       ],
       "live_agents": 0,
-      "label": "base.eth"
+      "label": "1 wallet(s) on localhost"
     },
     {
       "agents": 39,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 34,
-      "owners": 19,
-      "domains": [
-        "ethereum.org"
-      ],
-      "live_agents": 0,
-      "label": "ethereum.org"
     },
     {
       "agents": 22,
@@ -75,6 +42,7 @@
       "domains": [
         "r2.markets"
       ],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "r2.markets"
     },
@@ -84,6 +52,7 @@
       "domains": [
         "olas.network"
       ],
+      "hosted_on": [],
       "live_agents": 18,
       "label": "olas.network"
     },
@@ -93,6 +62,7 @@
       "domains": [
         "lobster3301.com"
       ],
+      "hosted_on": [],
       "live_agents": 17,
       "label": "lobster3301.com"
     },
@@ -102,6 +72,7 @@
       "domains": [
         "execution.market"
       ],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "execution.market"
     },
@@ -109,6 +80,7 @@
       "agents": 13,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -116,6 +88,7 @@
       "agents": 13,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -125,6 +98,7 @@
       "domains": [
         "voltplayground.xyz"
       ],
+      "hosted_on": [],
       "live_agents": 13,
       "label": "voltplayground.xyz"
     },
@@ -132,6 +106,7 @@
       "agents": 12,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -139,6 +114,7 @@
       "agents": 11,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -148,6 +124,7 @@
       "domains": [
         "surfliquid.com"
       ],
+      "hosted_on": [],
       "live_agents": 10,
       "label": "surfliquid.com"
     },
@@ -155,6 +132,7 @@
       "agents": 7,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
     },
@@ -164,8 +142,41 @@
       "domains": [
         "virtuals.io"
       ],
+      "hosted_on": [],
       "live_agents": 3,
       "label": "virtuals.io"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 5,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 5,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
     }
   ]
 }

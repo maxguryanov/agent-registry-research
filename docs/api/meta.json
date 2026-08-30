@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-30T13:17:07.923004+00:00",
+  "generated_at": "2026-08-30T13:36:54.128620+00:00",
   "chain": "Base",
   "chain_id": 8453,
   "contract": "0x8004a169fb4a3325136eb29fa0ceb6d2e539a432",
-  "indexed_through_block": 50651495,
-  "indexer_last_run": "2026-08-30T12:20:36.585475+00:00",
+  "indexed_through_block": 50653282,
+  "indexer_last_run": "2026-08-30T13:20:10.534867+00:00",
   "probe_run": {
     "id": 2,
     "kind": "panel",

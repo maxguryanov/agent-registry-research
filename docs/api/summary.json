@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-30T13:17:07.923004+00:00",
+  "generated_at": "2026-08-30T13:36:54.128620+00:00",
   "registry": {
     "chain_id": 8453,
     "chain": "Base",
     "contract": "0x8004a169fb4a3325136eb29fa0ceb6d2e539a432",
-    "agents": 74078,
-    "distinct_owners": 42368,
-    "agents_with_uri": 53297,
-    "empty_uri_at_registration": 28234,
+    "agents": 74080,
+    "distinct_owners": 42370,
+    "agents_with_uri": 53298,
+    "empty_uri_at_registration": 28235,
     "uri_changed_after_registration": {
-      "n": 74078,
+      "n": 74080,
       "k": 11206,
       "pct": 15.13,
       "ci_low": 14.87,
@@ -17,15 +17,15 @@
     },
     "transferred": 19516,
     "first_registration": "2026-02-03T16:21:11+00:00",
-    "last_registration": "2026-08-30T12:07:27+00:00",
+    "last_registration": "2026-08-30T12:59:41+00:00",
     "events": {
-      "MetadataSet": 161995,
-      "Transfer": 93714,
-      "Registered": 74078,
+      "MetadataSet": 161997,
+      "Transfer": 93716,
+      "Registered": 74080,
       "URIUpdated": 19406
     },
-    "indexed_through_block": 50651495,
-    "indexer_last_run": "2026-08-30T12:20:36.585475+00:00",
+    "indexed_through_block": 50653282,
+    "indexer_last_run": "2026-08-30T13:20:10.534867+00:00",
     "indexer_last_status": "ok",
     "indexer_last_error": null
   },
@@ -62,8 +62,8 @@
     },
     {
       "month": "2026-08",
-      "registered": 13762,
-      "cumulative": 74078
+      "registered": 13764,
+      "cumulative": 74080
     }
   ],
   "liveness": {
@@ -234,76 +234,76 @@
       ]
     },
     "by_project": {
-      "denominator": 843,
+      "denominator": 1509,
       "stages": [
         {
           "key": "s1_uri_present",
           "label": "non-empty URI",
-          "n": 843,
-          "k": 411,
-          "pct": 48.75,
-          "ci_low": 45.39,
-          "ci_high": 52.13,
-          "pct_of_previous": 48.75
+          "n": 1509,
+          "k": 1077,
+          "pct": 71.37,
+          "ci_low": 69.04,
+          "ci_high": 73.6,
+          "pct_of_previous": 71.37
         },
         {
           "key": "s2_resolved",
           "label": "URI resolves",
-          "n": 843,
-          "k": 349,
-          "pct": 41.4,
-          "ci_low": 38.12,
-          "ci_high": 44.76,
-          "pct_of_previous": 84.91
+          "n": 1509,
+          "k": 927,
+          "pct": 61.43,
+          "ci_low": 58.95,
+          "ci_high": 63.86,
+          "pct_of_previous": 86.07
         },
         {
           "key": "s3_valid_json",
           "label": "valid JSON",
-          "n": 843,
-          "k": 337,
-          "pct": 39.98,
-          "ci_low": 36.72,
-          "ci_high": 43.32,
-          "pct_of_previous": 96.56
+          "n": 1509,
+          "k": 897,
+          "pct": 59.44,
+          "ci_low": 56.95,
+          "ci_high": 61.89,
+          "pct_of_previous": 96.76
         },
         {
           "key": "s4_schema_match",
           "label": "matches ERC-8004 schema",
-          "n": 843,
-          "k": 271,
-          "pct": 32.15,
-          "ci_low": 29.08,
-          "ci_high": 35.37,
-          "pct_of_previous": 80.42
+          "n": 1509,
+          "k": 585,
+          "pct": 38.77,
+          "ci_low": 36.34,
+          "ci_high": 41.25,
+          "pct_of_previous": 65.22
         },
         {
           "key": "s5_has_services",
           "label": "declares services",
-          "n": 843,
-          "k": 153,
-          "pct": 18.15,
-          "ci_low": 15.69,
-          "ci_high": 20.89,
-          "pct_of_previous": 56.46
+          "n": 1509,
+          "k": 459,
+          "pct": 30.42,
+          "ci_low": 28.15,
+          "ci_high": 32.79,
+          "pct_of_previous": 78.46
         },
         {
           "key": "s6_endpoint_alive",
           "label": "endpoint responds",
-          "n": 843,
+          "n": 1509,
           "k": 89,
-          "pct": 10.56,
-          "ci_low": 8.66,
-          "ci_high": 12.81,
-          "pct_of_previous": 58.17
+          "pct": 5.9,
+          "ci_low": 4.82,
+          "ci_high": 7.2,
+          "pct_of_previous": 19.39
         },
         {
           "key": "live_strict",
           "label": "endpoint responds (strict)",
-          "n": 843,
+          "n": 1509,
           "k": 74,
-          "pct": 8.78,
-          "ci_low": 7.05,
-          "ci_high": 10.88,
+          "pct": 4.9,
+          "ci_low": 3.92,
+          "ci_high": 6.11,
           "pct_of_previous": 83.15
         }
       ]
@@ -477,36 +477,10 @@
     ],
     "top_projects": [
       {
-        "agents": 308,
-        "owners": 306,
-        "domains": [
-          "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
-        ],
-        "live_agents": 0,
-        "label": "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
-      },
-      {
-        "agents": 257,
-        "owners": 254,
-        "domains": [
-          "ipfs.io"
-        ],
-        "live_agents": 0,
-        "label": "ipfs.io"
-      },
-      {
-        "agents": 81,
-        "owners": 81,
-        "domains": [
-          "pinata.cloud"
-        ],
-        "live_agents": 0,
-        "label": "pinata.cloud"
-      },
-      {
         "agents": 72,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -514,35 +488,28 @@
         "agents": 59,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
       {
-        "agents": 57,
-        "owners": 4,
-        "domains": [
-          "base.eth",
+        "agents": 50,
+        "owners": 1,
+        "domains": [],
+        "hosted_on": [
           "localhost",
           "wild-west-bots.vercel.app"
         ],
         "live_agents": 0,
-        "label": "base.eth"
+        "label": "1 wallet(s) on localhost"
       },
       {
         "agents": 39,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
-      },
-      {
-        "agents": 34,
-        "owners": 19,
-        "domains": [
-          "ethereum.org"
-        ],
-        "live_agents": 0,
-        "label": "ethereum.org"
       },
       {
         "agents": 22,
@@ -550,6 +517,7 @@
         "domains": [
           "r2.markets"
         ],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "r2.markets"
       },
@@ -559,6 +527,7 @@
         "domains": [
           "olas.network"
         ],
+        "hosted_on": [],
         "live_agents": 18,
         "label": "olas.network"
       },
@@ -568,6 +537,7 @@
         "domains": [
           "lobster3301.com"
         ],
+        "hosted_on": [],
         "live_agents": 17,
         "label": "lobster3301.com"
       },
@@ -577,6 +547,7 @@
         "domains": [
           "execution.market"
         ],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "execution.market"
       },
@@ -584,6 +555,7 @@
         "agents": 13,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -591,6 +563,7 @@
         "agents": 13,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -600,6 +573,7 @@
         "domains": [
           "voltplayground.xyz"
         ],
+        "hosted_on": [],
         "live_agents": 13,
         "label": "voltplayground.xyz"
       },
@@ -607,6 +581,7 @@
         "agents": 12,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -614,6 +589,7 @@
         "agents": 11,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -623,6 +599,7 @@
         "domains": [
           "surfliquid.com"
         ],
+        "hosted_on": [],
         "live_agents": 10,
         "label": "surfliquid.com"
       },
@@ -630,6 +607,7 @@
         "agents": 7,
         "owners": 1,
         "domains": [],
+        "hosted_on": [],
         "live_agents": 0,
         "label": "1 wallet(s), no domain"
       },
@@ -639,8 +617,41 @@
         "domains": [
           "virtuals.io"
         ],
+        "hosted_on": [],
         "live_agents": 3,
         "label": "virtuals.io"
+      },
+      {
+        "agents": 6,
+        "owners": 1,
+        "domains": [],
+        "hosted_on": [],
+        "live_agents": 0,
+        "label": "1 wallet(s), no domain"
+      },
+      {
+        "agents": 6,
+        "owners": 1,
+        "domains": [],
+        "hosted_on": [],
+        "live_agents": 0,
+        "label": "1 wallet(s), no domain"
+      },
+      {
+        "agents": 5,
+        "owners": 1,
+        "domains": [],
+        "hosted_on": [],
+        "live_agents": 0,
+        "label": "1 wallet(s), no domain"
+      },
+      {
+        "agents": 5,
+        "owners": 1,
+        "domains": [],
+        "hosted_on": [],
+        "live_agents": 0,
+        "label": "1 wallet(s), no domain"
       }
     ]
   },
