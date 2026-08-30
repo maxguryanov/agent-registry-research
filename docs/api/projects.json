@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T04:15:25.607839+00:00",
+  "generated_at": "2026-08-30T13:17:07.923004+00:00",
   "top_projects": [
     {
       "agents": 308,
@@ -25,7 +25,7 @@
       "domains": [
         "pinata.cloud"
       ],
-      "live_agents": 1,
+      "live_agents": 0,
       "label": "pinata.cloud"
     },
     {
@@ -160,10 +160,12 @@
     },
     {
       "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
+      "owners": 4,
+      "domains": [
+        "virtuals.io"
+      ],
+      "live_agents": 3,
+      "label": "virtuals.io"
     }
   ]
 }
