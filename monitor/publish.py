@@ -23,6 +23,7 @@ import pathlib
 from datetime import datetime, timezone
 
 from . import charts, db, metrics
+from .hosts import hosting_list
 from .page_style import STYLE
 
 REPO_URL = "https://github.com/maxguryanov/agent-registry-research"
@@ -298,10 +299,28 @@ def build_page(doc: dict) -> str:
 
     if liveness.get("status") == "ok" and liveness["top_projects"]:
         body.append('<h2>Largest projects</h2>')
-        body.append('<p class="note">Agents grouped by shared owner address or '
-                    'shared root domain, transitively. A lower bound on '
-                    'concentration: an operator using separate wallets and '
-                    'separate domains still counts as several projects.</p>')
+        body.append(
+            '<p class="note">Agents grouped by shared owner address or shared '
+            'root domain, transitively. A lower bound on concentration: an '
+            'operator using separate wallets <em>and</em> separate domains '
+            'still counts as several projects.</p>')
+        body.append(
+            '<p class="note">Domains that are shared hosting — object storage, '
+            'CDNs, public IPFS gateways, naming services, platforms where the '
+            'subdomain is a tenant — do not group anything. Agents on them '
+            'share a filing cabinet, not an operator, and joining them produced '
+            'a "project" called ipfs.io holding 257 agents across 254 unrelated '
+            'wallets. Such an agent is grouped by its owner alone. '
+            f'{len(hosting_list())} domains are treated this way:</p>')
+        body.append(
+            '<details class="excl"><summary>show the excluded domains</summary>'
+            '<p class="domlist">'
+            + ", ".join(f"<code>{esc(d)}</code>" for d in hosting_list())
+            + '</p><p class="note">A domain carrying many agents across almost '
+            'as many wallets is the signature of shared hosting, but it is a '
+            'guide for adding to this list by hand, not an automatic rule: '
+            '<code>voltplayground.xyz</code> shows thirteen agents on thirteen '
+            'wallets and all thirteen respond.</p></details>')
         body.append(projects_table(liveness["top_projects"]))
 
     body.append('<h2>API</h2>')

@@ -37,6 +37,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 
 from . import db
+from .hosts import is_shared_hosting
 
 # Outcomes that mean "we did not measure this agent", as opposed to
 # "we measured it and it was dead".
@@ -124,8 +125,12 @@ def cluster_projects(rows: list[dict]) -> dict:
         uf.find(agent)
         if row.get("owner"):
             uf.union(agent, ("owner", row["owner"].lower()))
-        if row.get("uri_root_domain"):
-            uf.union(agent, ("domain", row["uri_root_domain"].lower()))
+        domain = (row.get("uri_root_domain") or "").lower()
+        # A shared bucket, CDN or gateway is a filing cabinet, not an operator.
+        # Joining agents on it produced "projects" like ipfs.io with 257 agents
+        # across 254 unrelated wallets. Such an agent clusters by owner alone.
+        if domain and not is_shared_hosting(domain):
+            uf.union(agent, ("domain", domain))
 
     projects: dict = defaultdict(list)
     for row in rows:
@@ -380,15 +385,24 @@ def top_projects(rows: list[dict], limit: int = 20) -> list[dict]:
     projects = cluster_projects(rows)
     out = []
     for members in projects.values():
-        domains = sorted({m["uri_root_domain"] for m in members
-                          if m["uri_root_domain"]})
+        seen = sorted({m["uri_root_domain"] for m in members
+                       if m["uri_root_domain"]})
+        own_domains = [d for d in seen if not is_shared_hosting(d)]
+        hosting = [d for d in seen if is_shared_hosting(d)]
         owners = sorted({(m["owner"] or "").lower() for m in members if m["owner"]})
+        if own_domains:
+            label = own_domains[0]
+        elif hosting:
+            label = f"{len(owners)} wallet(s) on {hosting[0][:40]}"
+        else:
+            label = f"{len(owners)} wallet(s), no domain"
         out.append({
             "agents": len(members),
             "owners": len(owners),
-            "domains": domains[:5],
+            "domains": own_domains[:5],
+            "hosted_on": hosting[:3],
             "live_agents": sum(1 for m in members if m["live_strict"]),
-            "label": domains[0] if domains else f"{len(owners)} wallet(s), no domain",
+            "label": label,
         })
     out.sort(key=lambda p: -p["agents"])
     return out[:limit]

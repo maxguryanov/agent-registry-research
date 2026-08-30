@@ -113,6 +113,14 @@ code { font-family: var(--mono); font-size: 13.5px;
 .chart .dot { fill: var(--accent); }
 .empty { color: var(--faint); font-style: italic; }
 
+details.excl { margin: 12px 0 4px; }
+details.excl summary {
+  cursor: pointer; color: var(--accent); font-size: 14.5px;
+  padding: 4px 0; user-select: none;
+}
+details.excl .domlist { line-height: 2.1; }
+details.excl .domlist code { font-size: 12.5px; }
+
 footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border);
          color: var(--muted); font-size: 14px; }
 ul { padding-left: 20px; }

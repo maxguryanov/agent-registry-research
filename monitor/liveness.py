@@ -35,6 +35,8 @@ from typing import Any
 
 import httpx
 
+from .hosts import is_generic_endpoint_host
+
 REGISTRY_CAIP = "eip155:8453:0x8004a169fb4a3325136eb29fa0ceb6d2e539a432"
 
 # The only canonical value observed in the data is the -v1 one. The others are
@@ -61,37 +63,9 @@ MAX_ENDPOINTS_PER_AGENT = 5
 MAX_DOC_BYTES = 2_000_000
 
 # ---------------------------------------------------------------------------
-# Generic hosts
-#
-# A responding endpoint on one of these is not evidence that an agent works.
-# The host would answer for anyone. Counting them inflated the liveness figure
-# in the 2026 report from 6.8% to 7.3%: six of 88 apparently-live agents
-# qualified only because they pointed at a code repository or a social network.
-#
-# Deliberately NOT on this list: github.io, vercel.app, netlify.app, and
-# similar hosting subdomains, where the subdomain belongs to one project and a
-# response really is about that project.
+# Generic hosts: see monitor/hosts.py. The list lives there because clustering
+# needs a wider version of the same idea, and two copies would drift.
 # ---------------------------------------------------------------------------
-
-GENERIC_HOSTS = {
-    # code hosting and package registries
-    "github.com", "raw.githubusercontent.com", "gist.github.com",
-    "gitlab.com", "bitbucket.org", "sourceforge.net", "npmjs.com", "pypi.org",
-    # social and messaging
-    "facebook.com", "twitter.com", "x.com", "t.me", "telegram.me",
-    "discord.com", "discord.gg", "linkedin.com", "instagram.com",
-    "youtube.com", "youtu.be", "reddit.com", "medium.com", "mirror.xyz",
-    "warpcast.com", "farcaster.xyz",
-    # public IPFS and Arweave gateways
-    "ipfs.io", "cloudflare-ipfs.com", "dweb.link", "gateway.pinata.cloud",
-    "nftstorage.link", "w3s.link", "4everland.io", "ipfs.filebase.io",
-    "arweave.net", "gateway.irys.xyz",
-    # specifications and documentation
-    "eips.ethereum.org", "ethereum.org", "schema.org", "w3.org",
-    "docs.google.com", "drive.google.com", "notion.so", "notion.site",
-    # placeholders
-    "example.com", "example.org", "localhost",
-}
 
 # Public suffixes that are two labels deep. Not the full Public Suffix List:
 # that is a 15,000-line file updated weekly, and getting a handful of these
@@ -155,14 +129,8 @@ def registrable_domain(host: str) -> str:
 
 
 def is_generic_host(host: str) -> bool:
-    host = (host or "").lower().rstrip(".")
-    if not host:
-        return False
-    if host in GENERIC_HOSTS:
-        return True
-    # A subdomain of a generic host is generic too (m.facebook.com), but only
-    # when the parent is listed as generic in its own right.
-    return any(host.endswith("." + generic) for generic in GENERIC_HOSTS)
+    """A response from here is not evidence that the agent works."""
+    return is_generic_endpoint_host(host)
 
 
 # ---------------------------------------------------------------------------
