@@ -1,0 +1,12 @@
+{
+  "endpoints": [
+    "summary.json",
+    "meta.json",
+    "registrations.json",
+    "funnel.json",
+    "survival.json",
+    "projects.json"
+  ],
+  "source": "https://github.com/maxguryanov/agent-registry-research",
+  "license": "CC BY 4.0"
+}

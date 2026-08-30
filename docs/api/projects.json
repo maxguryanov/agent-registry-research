@@ -1,0 +1,169 @@
+{
+  "generated_at": "2026-08-30T04:15:25.607839+00:00",
+  "top_projects": [
+    {
+      "agents": 308,
+      "owners": 306,
+      "domains": [
+        "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
+      ],
+      "live_agents": 0,
+      "label": "termix-platform-prod.s3.ap-southeast-1.amazonaws.com"
+    },
+    {
+      "agents": 257,
+      "owners": 254,
+      "domains": [
+        "ipfs.io"
+      ],
+      "live_agents": 0,
+      "label": "ipfs.io"
+    },
+    {
+      "agents": 81,
+      "owners": 81,
+      "domains": [
+        "pinata.cloud"
+      ],
+      "live_agents": 1,
+      "label": "pinata.cloud"
+    },
+    {
+      "agents": 72,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 59,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 57,
+      "owners": 4,
+      "domains": [
+        "base.eth",
+        "localhost",
+        "wild-west-bots.vercel.app"
+      ],
+      "live_agents": 0,
+      "label": "base.eth"
+    },
+    {
+      "agents": 39,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 34,
+      "owners": 19,
+      "domains": [
+        "ethereum.org"
+      ],
+      "live_agents": 0,
+      "label": "ethereum.org"
+    },
+    {
+      "agents": 22,
+      "owners": 2,
+      "domains": [
+        "r2.markets"
+      ],
+      "live_agents": 0,
+      "label": "r2.markets"
+    },
+    {
+      "agents": 18,
+      "owners": 1,
+      "domains": [
+        "olas.network"
+      ],
+      "live_agents": 18,
+      "label": "olas.network"
+    },
+    {
+      "agents": 17,
+      "owners": 1,
+      "domains": [
+        "lobster3301.com"
+      ],
+      "live_agents": 17,
+      "label": "lobster3301.com"
+    },
+    {
+      "agents": 14,
+      "owners": 9,
+      "domains": [
+        "execution.market"
+      ],
+      "live_agents": 0,
+      "label": "execution.market"
+    },
+    {
+      "agents": 13,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 13,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 13,
+      "owners": 13,
+      "domains": [
+        "voltplayground.xyz"
+      ],
+      "live_agents": 13,
+      "label": "voltplayground.xyz"
+    },
+    {
+      "agents": 12,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 11,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 10,
+      "owners": 1,
+      "domains": [
+        "surfliquid.com"
+      ],
+      "live_agents": 10,
+      "label": "surfliquid.com"
+    },
+    {
+      "agents": 7,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    }
+  ]
+}

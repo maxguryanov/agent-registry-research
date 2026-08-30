@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-08-30T04:15:25.607839+00:00",
+  "chain": "Base",
+  "chain_id": 8453,
+  "contract": "0x8004a169fb4a3325136eb29fa0ceb6d2e539a432",
+  "indexed_through_block": 50635982,
+  "indexer_last_run": "2026-08-30T03:43:31.396424+00:00",
+  "probe_run": {
+    "id": 1,
+    "kind": "panel",
+    "started_at": "2026-08-30T03:43:34.985950+00:00",
+    "finished_at": "2026-08-30T04:15:25.139470+00:00",
+    "agents_checked": 2017,
+    "concurrency": 8,
+    "timeout_seconds": 20.0,
+    "prober_version": "1.0"
+  },
+  "source": "https://github.com/maxguryanov/agent-registry-research",
+  "license": "CC BY 4.0"
+}
