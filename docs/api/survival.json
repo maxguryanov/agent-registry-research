@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-30T14:54:24.168874+00:00",
+  "generated_at": "2026-08-31T04:21:38.168207+00:00",
   "survival": {
     "status": "insufficient_history",
-    "history_span_days": 0.5,
-    "days_until_first_horizon": 29.5,
-    "agents_with_history": 2017,
+    "history_span_days": 1.0,
+    "days_until_first_horizon": 29.0,
+    "agents_with_history": 2018,
     "horizons": [
       {
         "horizon_days": 30,
@@ -25,24 +25,24 @@
         "by_cohort": []
       }
     ],
-    "note": "Survival at 30 days needs 30 days of measurements. There are 0.5. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
+    "note": "Survival at 30 days needs 30 days of measurements. There are 1.0. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
   },
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 576,
-      "k": 42,
-      "pct": 7.29,
-      "ci_low": 5.44,
-      "ci_high": 9.71
+      "n": 572,
+      "k": 43,
+      "pct": 7.52,
+      "ci_low": 5.63,
+      "ci_high": 9.97
     },
     {
       "month": "2026-03",
-      "n": 416,
-      "k": 22,
-      "pct": 5.29,
-      "ci_low": 3.52,
-      "ci_high": 7.88
+      "n": 415,
+      "k": 23,
+      "pct": 5.54,
+      "ci_low": 3.72,
+      "ci_high": 8.18
     },
     {
       "month": "2026-04",
@@ -70,19 +70,19 @@
     },
     {
       "month": "2026-07",
-      "n": 69,
+      "n": 70,
       "k": 3,
-      "pct": 4.35,
-      "ci_low": 1.49,
-      "ci_high": 12.02
+      "pct": 4.29,
+      "ci_low": 1.47,
+      "ci_high": 11.86
     },
     {
       "month": "2026-08",
-      "n": 380,
-      "k": 22,
-      "pct": 5.79,
-      "ci_low": 3.85,
-      "ci_high": 8.61
+      "n": 381,
+      "k": 23,
+      "pct": 6.04,
+      "ci_low": 4.06,
+      "ci_high": 8.9
     }
   ]
 }
