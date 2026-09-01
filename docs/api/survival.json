@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-31T04:21:38.168207+00:00",
+  "generated_at": "2026-09-01T04:28:32.663687+00:00",
   "survival": {
     "status": "insufficient_history",
-    "history_span_days": 1.0,
-    "days_until_first_horizon": 29.0,
-    "agents_with_history": 2018,
+    "history_span_days": 2.0,
+    "days_until_first_horizon": 28.0,
+    "agents_with_history": 2208,
     "horizons": [
       {
         "horizon_days": 30,
@@ -25,16 +25,16 @@
         "by_cohort": []
       }
     ],
-    "note": "Survival at 30 days needs 30 days of measurements. There are 1.0. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
+    "note": "Survival at 30 days needs 30 days of measurements. There are 2.0. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
   },
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 572,
+      "n": 579,
       "k": 43,
-      "pct": 7.52,
-      "ci_low": 5.63,
-      "ci_high": 9.97
+      "pct": 7.43,
+      "ci_low": 5.56,
+      "ci_high": 9.85
     },
     {
       "month": "2026-03",
@@ -62,27 +62,35 @@
     },
     {
       "month": "2026-06",
-      "n": 110,
-      "k": 12,
-      "pct": 10.91,
-      "ci_low": 6.35,
-      "ci_high": 18.11
+      "n": 69,
+      "k": 11,
+      "pct": 15.94,
+      "ci_low": 9.14,
+      "ci_high": 26.33
     },
     {
       "month": "2026-07",
-      "n": 70,
-      "k": 3,
-      "pct": 4.29,
-      "ci_low": 1.47,
-      "ci_high": 11.86
+      "n": 62,
+      "k": 2,
+      "pct": 3.23,
+      "ci_low": 0.89,
+      "ci_high": 11.02
     },
     {
       "month": "2026-08",
-      "n": 381,
+      "n": 527,
       "k": 23,
-      "pct": 6.04,
-      "ci_low": 4.06,
-      "ci_high": 8.9
+      "pct": 4.36,
+      "ci_low": 2.93,
+      "ci_high": 6.46
+    },
+    {
+      "month": "2026-09",
+      "n": 44,
+      "k": 0,
+      "pct": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 8.03
     }
   ]
 }
