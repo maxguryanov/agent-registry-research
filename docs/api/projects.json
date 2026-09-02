@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-01T04:28:32.663687+00:00",
+  "generated_at": "2026-09-02T04:31:22.991664+00:00",
   "top_projects": [
     {
-      "agents": 73,
+      "agents": 74,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -138,6 +138,22 @@
     },
     {
       "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
       "owners": 4,
       "domains": [
         "virtuals.io"
@@ -145,22 +161,6 @@
       "hosted_on": [],
       "live_agents": 3,
       "label": "virtuals.io"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
     },
     {
       "agents": 5,
