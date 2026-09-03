@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-02T04:31:22.991664+00:00",
+  "generated_at": "2026-09-03T07:03:05.137010+00:00",
   "survival": {
     "status": "insufficient_history",
-    "history_span_days": 3.0,
-    "days_until_first_horizon": 27.0,
-    "agents_with_history": 2256,
+    "history_span_days": 4.1,
+    "days_until_first_horizon": 25.9,
+    "agents_with_history": 2266,
     "horizons": [
       {
         "horizon_days": 30,
@@ -25,24 +25,24 @@
         "by_cohort": []
       }
     ],
-    "note": "Survival at 30 days needs 30 days of measurements. There are 3.0. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
+    "note": "Survival at 30 days needs 30 days of measurements. There are 4.1. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
   },
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 572,
-      "k": 41,
-      "pct": 7.17,
-      "ci_low": 5.33,
-      "ci_high": 9.58
+      "n": 569,
+      "k": 35,
+      "pct": 6.15,
+      "ci_low": 4.46,
+      "ci_high": 8.43
     },
     {
       "month": "2026-03",
-      "n": 414,
-      "k": 23,
-      "pct": 5.56,
-      "ci_low": 3.73,
-      "ci_high": 8.2
+      "n": 415,
+      "k": 22,
+      "pct": 5.3,
+      "ci_low": 3.53,
+      "ci_high": 7.9
     },
     {
       "month": "2026-04",
@@ -54,27 +54,27 @@
     },
     {
       "month": "2026-05",
-      "n": 204,
+      "n": 199,
       "k": 33,
-      "pct": 16.18,
-      "ci_low": 11.76,
-      "ci_high": 21.85
+      "pct": 16.58,
+      "ci_low": 12.06,
+      "ci_high": 22.37
     },
     {
       "month": "2026-06",
-      "n": 70,
+      "n": 80,
       "k": 12,
-      "pct": 17.14,
-      "ci_low": 10.09,
-      "ci_high": 27.62
+      "pct": 15.0,
+      "ci_low": 8.79,
+      "ci_high": 24.41
     },
     {
       "month": "2026-07",
-      "n": 69,
-      "k": 3,
-      "pct": 4.35,
-      "ci_low": 1.49,
-      "ci_high": 12.02
+      "n": 80,
+      "k": 5,
+      "pct": 6.25,
+      "ci_low": 2.7,
+      "ci_high": 13.81
     },
     {
       "month": "2026-08",
@@ -86,11 +86,11 @@
     },
     {
       "month": "2026-09",
-      "n": 92,
+      "n": 101,
       "k": 0,
       "pct": 0.0,
       "ci_low": 0.0,
-      "ci_high": 4.01
+      "ci_high": 3.66
     }
   ]
 }
