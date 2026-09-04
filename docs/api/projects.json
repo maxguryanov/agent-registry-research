@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T07:03:05.137010+00:00",
+  "generated_at": "2026-09-04T04:32:48.376352+00:00",
   "top_projects": [
     {
       "agents": 77,
@@ -163,7 +163,7 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 5,
+      "agents": 6,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
