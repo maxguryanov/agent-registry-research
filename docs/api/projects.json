@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T04:32:48.376352+00:00",
+  "generated_at": "2026-09-05T05:22:34.752428+00:00",
   "top_projects": [
     {
       "agents": 77,
@@ -57,12 +57,14 @@
       "label": "olas.network"
     },
     {
-      "agents": 17,
+      "agents": 18,
       "owners": 1,
       "domains": [
         "lobster3301.com"
       ],
-      "hosted_on": [],
+      "hosted_on": [
+        "localhost"
+      ],
       "live_agents": 17,
       "label": "lobster3301.com"
     },
@@ -77,30 +79,30 @@
       "label": "execution.market"
     },
     {
-      "agents": 13,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 13,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 13,
-      "owners": 13,
+      "agents": 14,
+      "owners": 14,
       "domains": [
         "voltplayground.xyz"
       ],
       "hosted_on": [],
-      "live_agents": 13,
+      "live_agents": 14,
       "label": "voltplayground.xyz"
+    },
+    {
+      "agents": 13,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 13,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
     },
     {
       "agents": 12,
@@ -146,6 +148,14 @@
     },
     {
       "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
       "owners": 4,
       "domains": [
         "virtuals.io"
@@ -153,14 +163,6 @@
       "hosted_on": [],
       "live_agents": 3,
       "label": "virtuals.io"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
     },
     {
       "agents": 6,
