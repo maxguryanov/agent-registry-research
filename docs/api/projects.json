@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-07T05:19:13.379367+00:00",
+  "generated_at": "2026-09-08T04:30:29.265870+00:00",
   "top_projects": [
     {
-      "agents": 78,
+      "agents": 79,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -18,7 +18,7 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 51,
+      "agents": 52,
       "owners": 1,
       "domains": [],
       "hosted_on": [
@@ -70,16 +70,6 @@
     },
     {
       "agents": 14,
-      "owners": 14,
-      "domains": [
-        "voltplayground.xyz"
-      ],
-      "hosted_on": [],
-      "live_agents": 14,
-      "label": "voltplayground.xyz"
-    },
-    {
-      "agents": 14,
       "owners": 9,
       "domains": [
         "execution.market"
@@ -87,6 +77,16 @@
       "hosted_on": [],
       "live_agents": 0,
       "label": "execution.market"
+    },
+    {
+      "agents": 14,
+      "owners": 14,
+      "domains": [
+        "voltplayground.xyz"
+      ],
+      "hosted_on": [],
+      "live_agents": 14,
+      "label": "voltplayground.xyz"
     },
     {
       "agents": 13,
@@ -174,13 +174,11 @@
     },
     {
       "agents": 5,
-      "owners": 2,
-      "domains": [
-        "questflow.ai"
-      ],
+      "owners": 1,
+      "domains": [],
       "hosted_on": [],
       "live_agents": 0,
-      "label": "questflow.ai"
+      "label": "1 wallet(s), no domain"
     }
   ]
 }
