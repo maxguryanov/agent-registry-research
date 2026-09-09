@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-08T04:30:29.265870+00:00",
+  "generated_at": "2026-09-09T04:26:57.874281+00:00",
   "top_projects": [
     {
-      "agents": 79,
+      "agents": 81,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -18,7 +18,7 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 52,
+      "agents": 53,
       "owners": 1,
       "domains": [],
       "hosted_on": [
@@ -50,16 +50,6 @@
       "agents": 18,
       "owners": 1,
       "domains": [
-        "olas.network"
-      ],
-      "hosted_on": [],
-      "live_agents": 18,
-      "label": "olas.network"
-    },
-    {
-      "agents": 18,
-      "owners": 1,
-      "domains": [
         "lobster3301.com"
       ],
       "hosted_on": [
@@ -67,6 +57,16 @@
       ],
       "live_agents": 17,
       "label": "lobster3301.com"
+    },
+    {
+      "agents": 18,
+      "owners": 1,
+      "domains": [
+        "olas.network"
+      ],
+      "hosted_on": [],
+      "live_agents": 18,
+      "label": "olas.network"
     },
     {
       "agents": 14,
@@ -148,6 +148,14 @@
     },
     {
       "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
       "owners": 4,
       "domains": [
         "virtuals.io"
@@ -155,14 +163,6 @@
       "hosted_on": [],
       "live_agents": 3,
       "label": "virtuals.io"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
     },
     {
       "agents": 6,
