@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-11T05:14:07.026895+00:00",
+  "generated_at": "2026-09-12T05:16:01.086353+00:00",
   "top_projects": [
     {
-      "agents": 86,
+      "agents": 87,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -50,16 +50,6 @@
       "agents": 18,
       "owners": 1,
       "domains": [
-        "olas.network"
-      ],
-      "hosted_on": [],
-      "live_agents": 18,
-      "label": "olas.network"
-    },
-    {
-      "agents": 18,
-      "owners": 1,
-      "domains": [
         "lobster3301.com"
       ],
       "hosted_on": [
@@ -67,6 +57,16 @@
       ],
       "live_agents": 17,
       "label": "lobster3301.com"
+    },
+    {
+      "agents": 18,
+      "owners": 1,
+      "domains": [
+        "olas.network"
+      ],
+      "hosted_on": [],
+      "live_agents": 18,
+      "label": "olas.network"
     },
     {
       "agents": 14,
@@ -140,14 +140,6 @@
     },
     {
       "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 6,
       "owners": 4,
       "domains": [
         "virtuals.io"
@@ -173,12 +165,22 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 5,
+      "agents": 6,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [
+        "githubusercontent.com"
+      ],
+      "live_agents": 0,
+      "label": "1 wallet(s) on githubusercontent.com"
     }
   ]
 }
