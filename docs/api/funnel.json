@@ -1,259 +1,259 @@
 {
-  "generated_at": "2026-09-15T05:04:35.958827+00:00",
+  "generated_at": "2026-09-16T05:01:30.292561+00:00",
   "run": {
-    "id": 19,
+    "id": 20,
     "kind": "panel",
-    "started_at": "2026-09-15T03:49:39.056213+00:00",
-    "finished_at": "2026-09-15T05:04:34.411025+00:00",
-    "agents_checked": 2343,
+    "started_at": "2026-09-16T03:47:56.450830+00:00",
+    "finished_at": "2026-09-16T05:01:29.445911+00:00",
+    "agents_checked": 2347,
     "concurrency": 8,
     "timeout_seconds": 20.0,
     "prober_version": "1.1"
   },
   "by_agent": {
-    "denominator": 2066,
+    "denominator": 2190,
     "stages": [
       {
         "key": "s1_uri_present",
         "label": "non-empty URI",
-        "n": 2066,
-        "k": 1461,
-        "pct": 70.72,
-        "ci_low": 68.72,
-        "ci_high": 72.64,
-        "pct_of_previous": 70.72
+        "n": 2190,
+        "k": 1585,
+        "pct": 72.37,
+        "ci_low": 70.46,
+        "ci_high": 74.21,
+        "pct_of_previous": 72.37
       },
       {
         "key": "s2_resolved",
         "label": "URI resolves",
-        "n": 2066,
-        "k": 1321,
-        "pct": 63.94,
-        "ci_low": 61.85,
-        "ci_high": 65.98,
-        "pct_of_previous": 90.42
+        "n": 2190,
+        "k": 1445,
+        "pct": 65.98,
+        "ci_low": 63.97,
+        "ci_high": 67.94,
+        "pct_of_previous": 91.17
       },
       {
         "key": "s3_valid_json",
         "label": "valid JSON",
-        "n": 2066,
-        "k": 1266,
-        "pct": 61.28,
-        "ci_low": 59.16,
-        "ci_high": 63.36,
-        "pct_of_previous": 95.84
+        "n": 2190,
+        "k": 1390,
+        "pct": 63.47,
+        "ci_low": 61.43,
+        "ci_high": 65.46,
+        "pct_of_previous": 96.19
       },
       {
         "key": "s4_schema_match",
         "label": "matches ERC-8004 schema",
-        "n": 2066,
-        "k": 1042,
-        "pct": 50.44,
-        "ci_low": 48.28,
-        "ci_high": 52.59,
-        "pct_of_previous": 82.31
+        "n": 2190,
+        "k": 1080,
+        "pct": 49.32,
+        "ci_low": 47.22,
+        "ci_high": 51.41,
+        "pct_of_previous": 77.7
       },
       {
         "key": "s5_has_services",
         "label": "declares services",
-        "n": 2066,
-        "k": 851,
-        "pct": 41.19,
-        "ci_low": 39.09,
-        "ci_high": 43.33,
-        "pct_of_previous": 81.67
+        "n": 2190,
+        "k": 878,
+        "pct": 40.09,
+        "ci_low": 38.06,
+        "ci_high": 42.16,
+        "pct_of_previous": 81.3
       },
       {
         "key": "s6_endpoint_alive",
         "label": "endpoint responds",
-        "n": 2066,
-        "k": 145,
-        "pct": 7.02,
-        "ci_low": 5.99,
-        "ci_high": 8.2,
-        "pct_of_previous": 17.04
+        "n": 2190,
+        "k": 168,
+        "pct": 7.67,
+        "ci_low": 6.63,
+        "ci_high": 8.86,
+        "pct_of_previous": 19.13
       },
       {
         "key": "live_strict",
         "label": "endpoint responds (strict)",
-        "n": 2066,
-        "k": 129,
-        "pct": 6.24,
-        "ci_low": 5.28,
-        "ci_high": 7.37,
-        "pct_of_previous": 88.97
+        "n": 2190,
+        "k": 152,
+        "pct": 6.94,
+        "ci_low": 5.95,
+        "ci_high": 8.08,
+        "pct_of_previous": 90.48
       }
     ]
   },
   "by_owner": {
-    "denominator": 1551,
+    "denominator": 1669,
     "stages": [
       {
         "key": "s1_uri_present",
         "label": "non-empty URI",
-        "n": 1551,
-        "k": 1116,
-        "pct": 71.95,
-        "ci_low": 69.67,
-        "ci_high": 74.13,
-        "pct_of_previous": 71.95
+        "n": 1669,
+        "k": 1234,
+        "pct": 73.94,
+        "ci_low": 71.78,
+        "ci_high": 75.99,
+        "pct_of_previous": 73.94
       },
       {
         "key": "s2_resolved",
         "label": "URI resolves",
-        "n": 1551,
-        "k": 1014,
-        "pct": 65.38,
-        "ci_low": 62.97,
-        "ci_high": 67.7,
-        "pct_of_previous": 90.86
+        "n": 1669,
+        "k": 1132,
+        "pct": 67.83,
+        "ci_low": 65.55,
+        "ci_high": 70.02,
+        "pct_of_previous": 91.73
       },
       {
         "key": "s3_valid_json",
         "label": "valid JSON",
-        "n": 1551,
-        "k": 977,
-        "pct": 62.99,
-        "ci_low": 60.56,
-        "ci_high": 65.36,
-        "pct_of_previous": 96.35
+        "n": 1669,
+        "k": 1095,
+        "pct": 65.61,
+        "ci_low": 63.3,
+        "ci_high": 67.85,
+        "pct_of_previous": 96.73
       },
       {
         "key": "s4_schema_match",
         "label": "matches ERC-8004 schema",
-        "n": 1551,
-        "k": 874,
-        "pct": 56.35,
-        "ci_low": 53.87,
-        "ci_high": 58.8,
-        "pct_of_previous": 89.46
+        "n": 1669,
+        "k": 912,
+        "pct": 54.64,
+        "ci_low": 52.25,
+        "ci_high": 57.02,
+        "pct_of_previous": 83.29
       },
       {
         "key": "s5_has_services",
         "label": "declares services",
-        "n": 1551,
-        "k": 715,
-        "pct": 46.1,
-        "ci_low": 43.63,
-        "ci_high": 48.59,
-        "pct_of_previous": 81.81
+        "n": 1669,
+        "k": 742,
+        "pct": 44.46,
+        "ci_low": 42.09,
+        "ci_high": 46.85,
+        "pct_of_previous": 81.36
       },
       {
         "key": "s6_endpoint_alive",
         "label": "endpoint responds",
-        "n": 1551,
-        "k": 89,
-        "pct": 5.74,
-        "ci_low": 4.69,
-        "ci_high": 7.01,
-        "pct_of_previous": 12.45
+        "n": 1669,
+        "k": 113,
+        "pct": 6.77,
+        "ci_low": 5.66,
+        "ci_high": 8.08,
+        "pct_of_previous": 15.23
       },
       {
         "key": "live_strict",
         "label": "endpoint responds (strict)",
-        "n": 1551,
-        "k": 74,
-        "pct": 4.77,
-        "ci_low": 3.82,
-        "ci_high": 5.95,
-        "pct_of_previous": 83.15
+        "n": 1669,
+        "k": 98,
+        "pct": 5.87,
+        "ci_low": 4.84,
+        "ci_high": 7.1,
+        "pct_of_previous": 86.73
       }
     ]
   },
   "by_project": {
-    "denominator": 1514,
+    "denominator": 1632,
     "stages": [
       {
         "key": "s1_uri_present",
         "label": "non-empty URI",
-        "n": 1514,
-        "k": 1079,
-        "pct": 71.27,
-        "ci_low": 68.94,
-        "ci_high": 73.49,
-        "pct_of_previous": 71.27
+        "n": 1632,
+        "k": 1197,
+        "pct": 73.35,
+        "ci_low": 71.15,
+        "ci_high": 75.43,
+        "pct_of_previous": 73.35
       },
       {
         "key": "s2_resolved",
         "label": "URI resolves",
-        "n": 1514,
-        "k": 988,
-        "pct": 65.26,
-        "ci_low": 62.82,
-        "ci_high": 67.61,
-        "pct_of_previous": 91.57
+        "n": 1632,
+        "k": 1106,
+        "pct": 67.77,
+        "ci_low": 65.46,
+        "ci_high": 69.99,
+        "pct_of_previous": 92.4
       },
       {
         "key": "s3_valid_json",
         "label": "valid JSON",
-        "n": 1514,
-        "k": 958,
-        "pct": 63.28,
-        "ci_low": 60.82,
-        "ci_high": 65.67,
-        "pct_of_previous": 96.96
+        "n": 1632,
+        "k": 1076,
+        "pct": 65.93,
+        "ci_low": 63.6,
+        "ci_high": 68.19,
+        "pct_of_previous": 97.29
       },
       {
         "key": "s4_schema_match",
         "label": "matches ERC-8004 schema",
-        "n": 1514,
-        "k": 856,
-        "pct": 56.54,
-        "ci_low": 54.03,
-        "ci_high": 59.02,
-        "pct_of_previous": 89.35
+        "n": 1632,
+        "k": 894,
+        "pct": 54.78,
+        "ci_low": 52.36,
+        "ci_high": 57.18,
+        "pct_of_previous": 83.09
       },
       {
         "key": "s5_has_services",
         "label": "declares services",
-        "n": 1514,
-        "k": 698,
-        "pct": 46.1,
-        "ci_low": 43.61,
-        "ci_high": 48.62,
-        "pct_of_previous": 81.54
+        "n": 1632,
+        "k": 725,
+        "pct": 44.42,
+        "ci_low": 42.03,
+        "ci_high": 46.85,
+        "pct_of_previous": 81.1
       },
       {
         "key": "s6_endpoint_alive",
         "label": "endpoint responds",
-        "n": 1514,
-        "k": 73,
-        "pct": 4.82,
-        "ci_low": 3.85,
-        "ci_high": 6.02,
-        "pct_of_previous": 10.46
+        "n": 1632,
+        "k": 97,
+        "pct": 5.94,
+        "ci_low": 4.9,
+        "ci_high": 7.2,
+        "pct_of_previous": 13.38
       },
       {
         "key": "live_strict",
         "label": "endpoint responds (strict)",
-        "n": 1514,
-        "k": 58,
-        "pct": 3.83,
-        "ci_low": 2.98,
-        "ci_high": 4.92,
-        "pct_of_previous": 79.45
+        "n": 1632,
+        "k": 82,
+        "pct": 5.02,
+        "ci_low": 4.07,
+        "ci_high": 6.19,
+        "pct_of_previous": 84.54
       }
     ]
   },
   "generic_hosts_only": {
-    "n": 2066,
+    "n": 2190,
     "k": 16,
-    "pct": 0.77,
-    "ci_low": 0.48,
-    "ci_high": 1.25
+    "pct": 0.73,
+    "ci_low": 0.45,
+    "ci_high": 1.18
   },
   "endpoints": {
-    "declared": 1602,
-    "responding": 203,
-    "responding_specific": 180
+    "declared": 1652,
+    "responding": 248,
+    "responding_specific": 223
   },
   "censored": {
-    "n": 277,
+    "n": 157,
     "note": "not measured: excluded by request, disallowed by robots.txt, or throttled on both passes. Kept out of every denominator rather than counted as dead.",
     "by_category": [
       {
         "category": "undetermined",
-        "n": 277,
+        "n": 157,
         "pct": 100.0
       }
     ]
@@ -261,68 +261,68 @@
   "failures": [
     {
       "category": "all_endpoints_dead",
-      "n": 706,
-      "pct": 34.17
+      "n": 710,
+      "pct": 32.42
     },
     {
       "category": "empty_uri",
       "n": 605,
-      "pct": 29.28
+      "pct": 27.63
     },
     {
       "category": "schema_mismatch",
-      "n": 224,
-      "pct": 10.84
+      "n": 310,
+      "pct": 14.16
     },
     {
       "category": "no_services",
-      "n": 191,
-      "pct": 9.24
+      "n": 202,
+      "pct": 9.22
     },
     {
       "category": "not_json",
       "n": 55,
-      "pct": 2.66
+      "pct": 2.51
     },
     {
       "category": "http_404_not_found",
       "n": 47,
-      "pct": 2.27
+      "pct": 2.15
     },
     {
       "category": "unsupported_scheme",
       "n": 27,
-      "pct": 1.31
-    },
-    {
-      "category": "http_504_gateway_timeout",
-      "n": 21,
-      "pct": 1.02
+      "pct": 1.23
     },
     {
       "category": "timeout_read",
-      "n": 17,
-      "pct": 0.82
+      "n": 24,
+      "pct": 1.1
     },
     {
       "category": "generic_hosts_only",
       "n": 16,
-      "pct": 0.77
+      "pct": 0.73
+    },
+    {
+      "category": "http_504_gateway_timeout",
+      "n": 14,
+      "pct": 0.64
     },
     {
       "category": "connect_failure",
       "n": 12,
-      "pct": 0.58
+      "pct": 0.55
     },
     {
       "category": "http_400_client_error",
       "n": 7,
-      "pct": 0.34
+      "pct": 0.32
     },
     {
       "category": "dns_failure",
       "n": 5,
-      "pct": 0.24
+      "pct": 0.23
     },
     {
       "category": "http_502_bad_gateway",
@@ -335,12 +335,12 @@
       "pct": 0.05
     },
     {
-      "category": "timeout_connect",
+      "category": "http_503_unavailable",
       "n": 1,
       "pct": 0.05
     },
     {
-      "category": "http_503_unavailable",
+      "category": "timeout_connect",
       "n": 1,
       "pct": 0.05
     }
