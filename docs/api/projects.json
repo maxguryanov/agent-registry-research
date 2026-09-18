@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-17T04:28:01.167589+00:00",
+  "generated_at": "2026-09-18T09:27:50.377281+00:00",
   "top_projects": [
     {
-      "agents": 90,
+      "agents": 91,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -10,7 +10,7 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 62,
+      "agents": 91,
       "owners": 1,
       "domains": [
         "lobster3301.com"
@@ -86,7 +86,7 @@
         "voltplayground.xyz"
       ],
       "hosted_on": [],
-      "live_agents": 14,
+      "live_agents": 0,
       "label": "voltplayground.xyz"
     },
     {

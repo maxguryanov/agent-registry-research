@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-17T04:28:01.167589+00:00",
+  "generated_at": "2026-09-18T09:27:50.377281+00:00",
   "survival": {
     "status": "insufficient_history",
-    "history_span_days": 18.0,
-    "days_until_first_horizon": 12.0,
-    "agents_with_history": 2376,
+    "history_span_days": 19.2,
+    "days_until_first_horizon": 10.8,
+    "agents_with_history": 2407,
     "horizons": [
       {
         "horizon_days": 30,
@@ -25,72 +25,72 @@
         "by_cohort": []
       }
     ],
-    "note": "Survival at 30 days needs 30 days of measurements. There are 18.0. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
+    "note": "Survival at 30 days needs 30 days of measurements. There are 19.2. The horizons below are computed on whatever qualifies so far and will be empty or unstable until then."
   },
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 573,
-      "k": 43,
-      "pct": 7.5,
-      "ci_low": 5.62,
-      "ci_high": 9.96
+      "n": 562,
+      "k": 36,
+      "pct": 6.41,
+      "ci_low": 4.66,
+      "ci_high": 8.74
     },
     {
       "month": "2026-03",
-      "n": 415,
-      "k": 23,
-      "pct": 5.54,
-      "ci_low": 3.72,
-      "ci_high": 8.18
+      "n": 272,
+      "k": 11,
+      "pct": 4.04,
+      "ci_low": 2.27,
+      "ci_high": 7.1
     },
     {
       "month": "2026-04",
-      "n": 212,
-      "k": 11,
-      "pct": 5.19,
-      "ci_low": 2.92,
-      "ci_high": 9.05
+      "n": 177,
+      "k": 8,
+      "pct": 4.52,
+      "ci_low": 2.31,
+      "ci_high": 8.66
     },
     {
       "month": "2026-05",
-      "n": 204,
-      "k": 33,
-      "pct": 16.18,
-      "ci_low": 11.76,
-      "ci_high": 21.85
+      "n": 152,
+      "k": 25,
+      "pct": 16.45,
+      "ci_low": 11.4,
+      "ci_high": 23.15
     },
     {
       "month": "2026-06",
-      "n": 70,
-      "k": 12,
-      "pct": 17.14,
-      "ci_low": 10.09,
-      "ci_high": 27.62
+      "n": 80,
+      "k": 10,
+      "pct": 12.5,
+      "ci_low": 6.93,
+      "ci_high": 21.5
     },
     {
       "month": "2026-07",
-      "n": 62,
+      "n": 52,
       "k": 2,
-      "pct": 3.23,
-      "ci_low": 0.89,
-      "ci_high": 11.02
+      "pct": 3.85,
+      "ci_low": 1.06,
+      "ci_high": 12.98
     },
     {
       "month": "2026-08",
-      "n": 527,
-      "k": 23,
-      "pct": 4.36,
-      "ci_low": 2.93,
-      "ci_high": 6.46
+      "n": 521,
+      "k": 17,
+      "pct": 3.26,
+      "ci_low": 2.05,
+      "ci_high": 5.16
     },
     {
       "month": "2026-09",
-      "n": 198,
-      "k": 3,
-      "pct": 1.52,
-      "ci_low": 0.52,
-      "ci_high": 4.36
+      "n": 229,
+      "k": 2,
+      "pct": 0.87,
+      "ci_low": 0.24,
+      "ci_high": 3.13
     }
   ]
 }
