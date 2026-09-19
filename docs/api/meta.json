@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-18T09:27:50.377281+00:00",
+  "generated_at": "2026-09-19T09:17:20.154090+00:00",
   "chain": "Base",
   "chain_id": 8453,
   "contract": "0x8004a169fb4a3325136eb29fa0ceb6d2e539a432",
-  "indexed_through_block": 51465330,
-  "indexer_last_run": "2026-09-18T08:28:32.906390+00:00",
+  "indexed_through_block": 51508185,
+  "indexer_last_run": "2026-09-19T08:16:57.669642+00:00",
   "probe_run": {
-    "id": 22,
+    "id": 23,
     "kind": "panel",
-    "started_at": "2026-09-18T08:28:38.227706+00:00",
-    "finished_at": "2026-09-18T09:27:49.789623+00:00",
-    "agents_checked": 2407,
+    "started_at": "2026-09-19T08:17:04.419008+00:00",
+    "finished_at": "2026-09-19T09:17:19.596444+00:00",
+    "agents_checked": 2508,
     "concurrency": 8,
     "timeout_seconds": 20.0,
     "prober_version": "1.1"

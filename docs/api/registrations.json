@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-18T09:27:50.377281+00:00",
+  "generated_at": "2026-09-19T09:17:20.154090+00:00",
   "monthly": [
     {
       "month": "2026-02",
@@ -38,36 +38,36 @@
     },
     {
       "month": "2026-09",
-      "registered": 8908,
-      "cumulative": 89532
+      "registered": 14045,
+      "cumulative": 94669
     }
   ],
   "totals": {
     "chain_id": 8453,
     "chain": "Base",
     "contract": "0x8004a169fb4a3325136eb29fa0ceb6d2e539a432",
-    "agents": 89532,
-    "distinct_owners": 48130,
-    "agents_with_uri": 67931,
-    "empty_uri_at_registration": 29059,
+    "agents": 94669,
+    "distinct_owners": 48567,
+    "agents_with_uri": 73059,
+    "empty_uri_at_registration": 29069,
     "uri_changed_after_registration": {
-      "n": 89532,
-      "k": 11243,
-      "pct": 12.56,
-      "ci_low": 12.34,
-      "ci_high": 12.78
+      "n": 94669,
+      "k": 11249,
+      "pct": 11.88,
+      "ci_low": 11.68,
+      "ci_high": 12.09
     },
-    "transferred": 19674,
+    "transferred": 19676,
     "first_registration": "2026-02-03T16:21:11+00:00",
-    "last_registration": "2026-09-18T08:26:41+00:00",
+    "last_registration": "2026-09-19T08:08:29+00:00",
     "events": {
-      "MetadataSet": 201009,
-      "Transfer": 109329,
-      "Registered": 89532,
-      "URIUpdated": 19532
+      "MetadataSet": 216336,
+      "Transfer": 114468,
+      "Registered": 94669,
+      "URIUpdated": 19544
     },
-    "indexed_through_block": 51465330,
-    "indexer_last_run": "2026-09-18T08:28:32.906390+00:00",
+    "indexed_through_block": 51508185,
+    "indexer_last_run": "2026-09-19T08:16:57.669642+00:00",
     "indexer_last_status": "ok",
     "indexer_last_error": null
   }
