@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-20T09:47:03.051670+00:00",
+  "generated_at": "2026-10-02T11:05:51.407296+00:00",
   "top_projects": [
     {
       "agents": 187,
@@ -15,7 +15,7 @@
       "label": "lobster3301.com"
     },
     {
-      "agents": 92,
+      "agents": 101,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -31,7 +31,7 @@
       "label": "1 wallet(s), no domain"
     },
     {
-      "agents": 53,
+      "agents": 56,
       "owners": 1,
       "domains": [],
       "hosted_on": [
@@ -50,6 +50,16 @@
       "label": "1 wallet(s), no domain"
     },
     {
+      "agents": 23,
+      "owners": 1,
+      "domains": [
+        "olas.network"
+      ],
+      "hosted_on": [],
+      "live_agents": 23,
+      "label": "olas.network"
+    },
+    {
       "agents": 22,
       "owners": 2,
       "domains": [
@@ -60,14 +70,14 @@
       "label": "r2.markets"
     },
     {
-      "agents": 18,
-      "owners": 1,
+      "agents": 15,
+      "owners": 10,
       "domains": [
-        "olas.network"
+        "execution.market"
       ],
       "hosted_on": [],
-      "live_agents": 18,
-      "label": "olas.network"
+      "live_agents": 0,
+      "label": "execution.market"
     },
     {
       "agents": 14,
@@ -78,16 +88,6 @@
       "hosted_on": [],
       "live_agents": 14,
       "label": "voltplayground.xyz"
-    },
-    {
-      "agents": 14,
-      "owners": 9,
-      "domains": [
-        "execution.market"
-      ],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "execution.market"
     },
     {
       "agents": 13,
@@ -161,27 +161,27 @@
       "agents": 6,
       "owners": 1,
       "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [],
+      "live_agents": 0,
+      "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
       "hosted_on": [
         "githubusercontent.com"
       ],
       "live_agents": 0,
       "label": "1 wallet(s) on githubusercontent.com"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
-      "hosted_on": [],
-      "live_agents": 0,
-      "label": "1 wallet(s), no domain"
     }
   ]
 }
