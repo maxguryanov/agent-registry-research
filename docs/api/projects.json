@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T11:05:51.407296+00:00",
+  "generated_at": "2026-10-03T10:27:51.601569+00:00",
   "top_projects": [
     {
       "agents": 187,
@@ -15,7 +15,7 @@
       "label": "lobster3301.com"
     },
     {
-      "agents": 101,
+      "agents": 102,
       "owners": 1,
       "domains": [],
       "hosted_on": [],
@@ -86,7 +86,7 @@
         "voltplayground.xyz"
       ],
       "hosted_on": [],
-      "live_agents": 14,
+      "live_agents": 1,
       "label": "voltplayground.xyz"
     },
     {
