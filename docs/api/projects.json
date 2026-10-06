@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-05T11:55:50.864989+00:00",
+  "generated_at": "2026-10-06T11:52:17.882631+00:00",
   "top_projects": [
     {
       "agents": 187,
@@ -143,16 +143,6 @@
       "agents": 6,
       "owners": 1,
       "domains": [],
-      "hosted_on": [
-        "githubusercontent.com"
-      ],
-      "live_agents": 0,
-      "label": "1 wallet(s) on githubusercontent.com"
-    },
-    {
-      "agents": 6,
-      "owners": 1,
-      "domains": [],
       "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
@@ -182,6 +172,16 @@
       "hosted_on": [],
       "live_agents": 0,
       "label": "1 wallet(s), no domain"
+    },
+    {
+      "agents": 6,
+      "owners": 1,
+      "domains": [],
+      "hosted_on": [
+        "githubusercontent.com"
+      ],
+      "live_agents": 0,
+      "label": "1 wallet(s) on githubusercontent.com"
     }
   ]
 }

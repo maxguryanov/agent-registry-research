@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-05T11:55:50.864989+00:00",
+  "generated_at": "2026-10-06T11:52:17.882631+00:00",
   "survival": {
     "status": "ok",
-    "history_span_days": 36.3,
+    "history_span_days": 37.3,
     "days_until_first_horizon": 0,
-    "agents_with_history": 2574,
+    "agents_with_history": 2576,
     "horizons": [
       {
         "horizon_days": 30,
@@ -95,35 +95,35 @@
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 572,
-      "k": 38,
-      "pct": 6.64,
-      "ci_low": 4.88,
-      "ci_high": 8.99
+      "n": 562,
+      "k": 36,
+      "pct": 6.41,
+      "ci_low": 4.66,
+      "ci_high": 8.74
     },
     {
       "month": "2026-03",
-      "n": 270,
-      "k": 9,
-      "pct": 3.33,
-      "ci_low": 1.76,
-      "ci_high": 6.21
+      "n": 283,
+      "k": 17,
+      "pct": 6.01,
+      "ci_low": 3.78,
+      "ci_high": 9.41
     },
     {
       "month": "2026-04",
-      "n": 171,
-      "k": 7,
-      "pct": 4.09,
-      "ci_low": 2.0,
-      "ci_high": 8.21
+      "n": 169,
+      "k": 4,
+      "pct": 2.37,
+      "ci_low": 0.92,
+      "ci_high": 5.93
     },
     {
       "month": "2026-05",
-      "n": 152,
-      "k": 33,
-      "pct": 21.71,
-      "ci_low": 15.9,
-      "ci_high": 28.92
+      "n": 144,
+      "k": 25,
+      "pct": 17.36,
+      "ci_low": 12.04,
+      "ci_high": 24.37
     },
     {
       "month": "2026-06",
@@ -135,19 +135,19 @@
     },
     {
       "month": "2026-07",
-      "n": 52,
-      "k": 2,
-      "pct": 3.85,
-      "ci_low": 1.06,
-      "ci_high": 12.98
+      "n": 64,
+      "k": 5,
+      "pct": 7.81,
+      "ci_low": 3.38,
+      "ci_high": 17.02
     },
     {
       "month": "2026-08",
-      "n": 521,
-      "k": 17,
-      "pct": 3.26,
-      "ci_low": 2.05,
-      "ci_high": 5.16
+      "n": 530,
+      "k": 23,
+      "pct": 4.34,
+      "ci_low": 2.91,
+      "ci_high": 6.43
     },
     {
       "month": "2026-09",
@@ -159,11 +159,11 @@
     },
     {
       "month": "2026-10",
-      "n": 27,
+      "n": 29,
       "k": 0,
       "pct": 0.0,
       "ci_low": 0.0,
-      "ci_high": 12.46
+      "ci_high": 11.7
     }
   ]
 }
