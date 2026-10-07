@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-06T11:52:17.882631+00:00",
+  "generated_at": "2026-10-07T11:36:38.637406+00:00",
   "survival": {
     "status": "ok",
-    "history_span_days": 37.3,
+    "history_span_days": 38.3,
     "days_until_first_horizon": 0,
-    "agents_with_history": 2576,
+    "agents_with_history": 2579,
     "horizons": [
       {
         "horizon_days": 30,
@@ -103,27 +103,27 @@
     },
     {
       "month": "2026-03",
-      "n": 283,
-      "k": 17,
-      "pct": 6.01,
-      "ci_low": 3.78,
-      "ci_high": 9.41
+      "n": 269,
+      "k": 9,
+      "pct": 3.35,
+      "ci_low": 1.77,
+      "ci_high": 6.24
     },
     {
       "month": "2026-04",
-      "n": 169,
-      "k": 4,
-      "pct": 2.37,
-      "ci_low": 0.92,
-      "ci_high": 5.93
+      "n": 176,
+      "k": 8,
+      "pct": 4.55,
+      "ci_low": 2.32,
+      "ci_high": 8.71
     },
     {
       "month": "2026-05",
-      "n": 144,
-      "k": 25,
-      "pct": 17.36,
-      "ci_low": 12.04,
-      "ci_high": 24.37
+      "n": 152,
+      "k": 33,
+      "pct": 21.71,
+      "ci_low": 15.9,
+      "ci_high": 28.92
     },
     {
       "month": "2026-06",
@@ -135,11 +135,11 @@
     },
     {
       "month": "2026-07",
-      "n": 64,
-      "k": 5,
-      "pct": 7.81,
-      "ci_low": 3.38,
-      "ci_high": 17.02
+      "n": 57,
+      "k": 3,
+      "pct": 5.26,
+      "ci_low": 1.81,
+      "ci_high": 14.37
     },
     {
       "month": "2026-08",
@@ -159,11 +159,11 @@
     },
     {
       "month": "2026-10",
-      "n": 29,
+      "n": 32,
       "k": 0,
       "pct": 0.0,
       "ci_low": 0.0,
-      "ci_high": 11.7
+      "ci_high": 10.72
     }
   ]
 }
