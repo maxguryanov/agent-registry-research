@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-07T11:36:38.637406+00:00",
+  "generated_at": "2026-10-08T11:56:59.467315+00:00",
   "survival": {
     "status": "ok",
-    "history_span_days": 38.3,
+    "history_span_days": 39.3,
     "days_until_first_horizon": 0,
-    "agents_with_history": 2579,
+    "agents_with_history": 2587,
     "horizons": [
       {
         "horizon_days": 30,
@@ -95,51 +95,51 @@
   "cohorts_cross_sectional": [
     {
       "month": "2026-02",
-      "n": 562,
+      "n": 572,
       "k": 36,
-      "pct": 6.41,
-      "ci_low": 4.66,
-      "ci_high": 8.74
+      "pct": 6.29,
+      "ci_low": 4.58,
+      "ci_high": 8.59
     },
     {
       "month": "2026-03",
-      "n": 269,
-      "k": 9,
-      "pct": 3.35,
-      "ci_low": 1.77,
-      "ci_high": 6.24
+      "n": 284,
+      "k": 19,
+      "pct": 6.69,
+      "ci_low": 4.32,
+      "ci_high": 10.21
     },
     {
       "month": "2026-04",
-      "n": 176,
-      "k": 8,
-      "pct": 4.55,
-      "ci_low": 2.32,
-      "ci_high": 8.71
+      "n": 172,
+      "k": 7,
+      "pct": 4.07,
+      "ci_low": 1.99,
+      "ci_high": 8.16
     },
     {
       "month": "2026-05",
-      "n": 152,
-      "k": 33,
-      "pct": 21.71,
-      "ci_low": 15.9,
-      "ci_high": 28.92
+      "n": 141,
+      "k": 25,
+      "pct": 17.73,
+      "ci_low": 12.31,
+      "ci_high": 24.86
     },
     {
       "month": "2026-06",
-      "n": 80,
+      "n": 77,
       "k": 11,
-      "pct": 13.75,
-      "ci_low": 7.85,
-      "ci_high": 22.97
+      "pct": 14.29,
+      "ci_low": 8.17,
+      "ci_high": 23.8
     },
     {
       "month": "2026-07",
-      "n": 57,
-      "k": 3,
-      "pct": 5.26,
-      "ci_low": 1.81,
-      "ci_high": 14.37
+      "n": 64,
+      "k": 5,
+      "pct": 7.81,
+      "ci_low": 3.38,
+      "ci_high": 17.02
     },
     {
       "month": "2026-08",
@@ -159,11 +159,11 @@
     },
     {
       "month": "2026-10",
-      "n": 32,
+      "n": 40,
       "k": 0,
       "pct": 0.0,
       "ci_low": 0.0,
-      "ci_high": 10.72
+      "ci_high": 8.76
     }
   ]
 }
